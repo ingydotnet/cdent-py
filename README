@@ -1,0 +1,22 @@
+C'Dent - Portable Module Programming Language
+
+C'Dent is a programming language that:
+
+1) Has multiple input syntaxes. Including defined subsets of:
+   - Perl
+   - Python
+   - Ruby
+   - JavaScript
+   - Java
+2) Compiles to a simple, well defined, Common DENimaTor, tree form.
+3) Emits trees to several existing programming languages, including:
+   - Perl
+   - Python
+   - Ruby
+   - JavaScript
+   - Java
+   - C
+4) Is statically, and usually implicitly, typed at compile time.
+5) Effectively creates portable modules.
+
+...
