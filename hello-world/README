@@ -1,0 +1,41 @@
+In the C'Dent world, you write *modules* in one language, and compile to many.
+
+It is worthwhile to start with the simplest case. The problem with hello_world
+is that it doesn't use any modules.
+
+These examples all use a World module. The program instantiates a World object
+from a World class, and calls the greet method, which prints the famous line.
+
+In this scenario, the files called `hello_world.*` are all supposedly
+ordinary program files written by Drones.
+
+The `[Ww]orld.*` files are all modules. A Leet writes the module in one
+language and (someday) uses C'Dent to compile it to the others. The Drones
+rejoice, and the Acmeism moves forward.
+
+== Glossary
+
+- Acmeism - Acmeism is the belief that computer algorithms, frameworks
+  and ideas are more important than the programming language they happen
+  to be written in. An Acmeist has become enlightened to the truth that
+  languages have become barriers that keep great programmers apart. The
+  Acmeist is determined that the only great computer projects are the
+  ones that benefit many programming languages.
+- Acmeist - An Acmeist is a person who believes in the tenets of
+  Acmeism. An Acmeist can be a programmer or not. A Drone can be an
+  Acmeist; a hacker who believes in fighting against software segregation and
+  who hopefully aspires to one day be a Leet. A Leet is absolutely an Acmeist.
+- Drone - In Acmeism a Drone is a mortal programmer who just cares about
+  doing the programming task at hand in their favorite language.
+- Leet - A Leet is a supreme hacker being who believes in ideas over
+  languages and wants those ideas available to drones of every language.
+
+== Running the examples
+
+perl hello_world.pl
+python hello_world.py
+ruby hello_world.rb
+js hello_world.js
+php hello_world.php
+make java; java hello_world
+make cpp; ./hello_world
