@@ -1,3 +1,4 @@
+
 In the C'Dent world, you write *modules* in one language, and compile to many.
 
 It is worthwhile to start with the simplest case. The problem with hello_world
@@ -21,12 +22,15 @@ rejoice, and the Acmeism moves forward.
   languages have become barriers that keep great programmers apart. The
   Acmeist is determined that the only great computer projects are the
   ones that benefit many programming languages.
+
 - Acmeist - An Acmeist is a person who believes in the tenets of
   Acmeism. An Acmeist can be a programmer or not. A Drone can be an
   Acmeist; a hacker who believes in fighting against software segregation and
   who hopefully aspires to one day be a Leet. A Leet is absolutely an Acmeist.
+
 - Drone - In Acmeism a Drone is a mortal programmer who just cares about
   doing the programming task at hand in their favorite language.
+
 - Leet - A Leet is a supreme hacker being who believes in ideas over
   languages and wants those ideas available to drones of every language.
 
@@ -39,3 +43,6 @@ js hello_world.js
 php hello_world.php
 make java; java hello_world
 make cpp; ./hello_world
+
+
+

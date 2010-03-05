@@ -1,5 +1,4 @@
-# import cdent;
-__all__ = ['World']
+# from cdent import *
 
 class World:
     def greet(self):

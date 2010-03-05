@@ -1,0 +1,29 @@
+module:
+  name: TitleCaseName
+  classes: class+
+
+class:
+  name: TitleCaseName
+  methods: method*
+  attributes: attribute*
+
+method:
+  name: LowerCaseName
+  type: Type
+  arguments: variable*
+  expressions: expression*
+
+variable:
+  name: LowerCaseName
+  type: Type
+
+expression: (methodCall | variable)
+
+expression: (print|return)
+
+print:
+  argument: string
+
+return:
+  type: Type
+  value: ex
