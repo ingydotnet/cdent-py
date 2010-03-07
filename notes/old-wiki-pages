@@ -1,0 +1,139 @@
+C'Dent is a language that wants to:
+
+* Have a really nice syntax. So it is fun and easy to use.
+* Be compiled into today's popular, dynamic, object oriented languages. Namely Perl, Python, JavaScript? and Ruby. Possibly more.
+* Be a good and standard way to write portable modules for these languages.
+* Be strongly typed at compilation time. So many errors can be caught during compilation.
+* Be a great scripting language. You can it to do common shell tasks.
+* Be safe when it needs to be. You can safely run code from untrusted sources.
+* Be a standard sub-language for things like database queries. Doesn't tie you to a specific programming language. 
+
+One of the main goals for C'Dent is writing cross-language modules. Code that can be used in the same way in any of the target languages.
+
+----
+
+This page talks about the scope of the langauge. What types of features
+you'll see and how they work.
+
+= C'Dent Programming Files
+
+Programming languages put their source code into files. These files have names.
+
+In C'Dent there are two types of files: modules and programs.
+
+Every programming file in C'Dent is called a module. A module is a file
+that contains classes.
+
+A program is a file that contains code that is not in any class.
+Technically this code is put into the class called Main and into a
+function called run.
+
+For example, these two programs are the same:
+
+put "Hello, world"
+
+and
+
+Main():
+    run():
+        put "Hello, world"
+
+= Defining Modules 
+
+It is intended that C'Dent will be a language of modules. Modules are
+containers of code that serve some larger programming purpose and are
+used by other modules and programs.
+
+----
+
+C'Dent needs to define a common denominator Runtime for that can be accurately supported by its target languages.
+
+= Classes
+
+A class is a named container of functions (aka methods).
+
+The class can have a parent class.
+
+All functions live in some class.
+
+Class names always start with a capital ascii letter.
+
+= Objects
+
+An object always has an associated class.
+
+= Functions
+
+All functions in C'Dent are actually method calls. This means they always get called with an instance object as the first argument.
+
+A function name always begins with a lowercase ascii letter.
+
+= Modules
+
+A module is a file that contains C'Dent code.
+
+= Special Classes
+
+There are some builtin classes.
+
+Data types all have a class:
+
+* String
+* Number
+* Hash
+* Array 
+
+Other classes are:
+
+* Env - The system environment
+* Global - Where global variables live
+* Object - The default parent class 
+
+----
+
+Here is a sample Ruby program from http://www.rubycentral.com/pickaxe/intro.html.
+
+{{{
+def sayGoodnight(name)
+  result = "Goodnight, " + name
+  return result
+end
+
+
+# Time for bed...
+puts sayGoodnight("John-Boy")
+puts sayGoodnight("Mary-Ellen")
+}}}
+
+Here is the same code in C'Dent:
+
+{{{
+sayGoodnight(name):
+  result = "Goodnight, " ++ name
+  return result
+
+# Time for bed...
+put sayGoodnight("John-Boy")
+put sayGoodnight("Mary-Ellen")
+}}}
+
+As you can see the code is very similar. Let's point out the differences.
+
+We don't need the `def` keyword to define a method. Just the method name, arguments in parens, and a colon. Indentation defines scope (actually {} can be used but indentation implies those), so we don't need an `end` statement.
+
+`++` is the string concatenation operator. We also could have used double quote interpolation:
+
+{{{
+  result = "Goodnight, $name"
+}}}
+
+We use `put` instead of `puts`. It prints out the string followed by a newline. This method comes from the `IO` module which is used by the `CDent.Common` module which is implied by default in every C'Dent ''program''.
+
+We could have defined the method like this:
+
+{{{
+String sayGoodnight(String name) { return "Goodnight, $name" }
+}}}
+
+This version has explicit types, but these types were implied by the usage, so the declarations are not required. (C'Dent needs to know the type of all methods and variables). Also we use curly braces to define the scope, and thus we remove the colon.
+
