@@ -1,27 +1,28 @@
---- !!cdent/module
+%TAG ! tag:cdent.org,2010:
+--- !module
 time: 2010-03-04T01:23:45
 from:
   name: World.py
   path: /Users/ingy/src/hello-world/World.py
 name: World
 content:
-- !!cdent/comment:
+- !comment
   line: 1
   value: "# from cdent import *\n\n"
-- !!cdent/class
+- !class
   line: 3
   name: World
   content:
-  - !!cdent/method
+  - !method
     line: 4
     name: greet
     type: void
     args: []
     content:
-    - !!cdent/builtin
+    - !builtin
       line: 5
       name: print
       args:
       - "Hello, world\n"
-    - !!cdent/return
+    - !return
       value: ~
