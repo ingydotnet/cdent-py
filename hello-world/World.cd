@@ -3,26 +3,28 @@
 time: 2010-03-04T01:23:45
 from:
   name: World.py
+  lang: py
   path: /Users/ingy/src/hello-world/World.py
 name: World
-content:
+has:
 - !comment
   line: 1
-  value: "# from cdent import *\n\n"
+  val: "# from cdent import *\n\n"
 - !class
   line: 3
   name: World
-  content:
+  has:
   - !method
     line: 4
     name: greet
     type: void
     args: []
-    content:
+    has:
     - !builtin
       line: 5
       name: print
       args:
-      - "Hello, world\n"
+      - !string
+        val: 'Hello, world\n'
     - !return
       value: ~
