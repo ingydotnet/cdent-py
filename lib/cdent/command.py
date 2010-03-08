@@ -1,4 +1,4 @@
-"""
+"""\
 Command line UI module for C'Dent
 
 :w|!PYTHONPATH=lib python cdent --compile --from=cd --to=js --input=hello-world/World.cd --output=hello-world/World.py
@@ -6,7 +6,6 @@ Command line UI module for C'Dent
 
 import os, sys
 from optparse import *
-import yaml                 # XXX for debugging
 
 class Command():
     def __init__(self, args):
@@ -52,6 +51,7 @@ class Command():
         parser.add_option(
             "--input", type="string",
             action="callback", callback=cb_input,
+            help="input file -- default is stdin",
         )
 
         def cb_output(option, opt, value, parser):
@@ -59,6 +59,15 @@ class Command():
         parser.add_option(
             "--output", type="string",
             action="callback", callback=cb_output,
+            help="output file -- default is stdout",
+        )
+
+        def cb_version(option, opt, value, parser):
+            self.action = 'version'
+        parser.add_option(
+            "--version",
+            action="callback", callback=cb_version,
+            help="print cdent version"
         )
 
         (opts, args) = parser.parse_args()
@@ -67,10 +76,11 @@ class Command():
             raise OptionError('extra arguments found', 'arguments')
         if (not self.action):
             raise OptionError('is required', '--compile')
-        if (not self.src):
-            raise OptionError('is required', '--from')
-        if (not self.to):
-            raise OptionError('is required', '--to')
+        if self.action == 'compile':
+            if (not self.src):
+                raise OptionError('is required', '--from')
+            if (not self.to):
+                raise OptionError('is required', '--to')
 
     def main(self):
         getattr(self, self.action)()
@@ -78,5 +88,9 @@ class Command():
     def compile(self):
         exec "from cdent.compiler." + self.src + " import Compiler"
         exec "from cdent.generator." + self.to + " import Generator"
-        ast = Compiler().compile(self.input)
-        Generator().generate(ast, self.output)
+        ast = Compiler(self.input).compile()
+        Generator(self.output).generate(ast)
+
+    def version(self):
+        import cdent
+        print "C'Dent version '%s'" % cdent.version

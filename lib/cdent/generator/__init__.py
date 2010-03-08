@@ -1,13 +1,32 @@
-class Base():
-    def __init__(self):
-        self.code = []
+"""\
+Code generator base class for C'Dent
+"""
 
-    def write(self, path):
-        if path == '-':
+import re
+
+class Generator():
+    def __init__(self, path):
+        self.path = path
+        self.code = []
+        self.comment_re = re.compile('^\s*#+', re.MULTILINE);
+
+    def generate(self, ast):
+        self.dispatch(ast)
+        self.write()
+
+    def gen_module(self, module):
+        for node in module.has:
+            self.dispatch(node)
+
+    def gen_string(self, string):
+        self.put('"' + string.val + '"')
+
+    def write(self):
+        if self.path == '-':
             import sys
             f = sys.stdout
         else:
-            f = file(path, 'w')
+            f = file(self.path, 'w')
         f.write(''.join(self.code)) 
 
     def dispatch(self, node):

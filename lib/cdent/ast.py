@@ -1,18 +1,6 @@
-"""
+"""\
 Abstact Syntax Tree classes for C'Dent
 """
-
-
-from yaml import load, dump
-try:
-    from yaml import CLoader as Loader
-    from yaml import CDumper as Dumper
-except ImportError:
-    from yaml import Loader, Dumper
-
-class AST():
-    def __init__():
-        pass
 
 class ast_module(): pass
 class ast_comment(): pass

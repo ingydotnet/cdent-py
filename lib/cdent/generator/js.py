@@ -1,23 +1,10 @@
-"""
+"""\
 JavaScript code generator for C'Dent
 """
 
-import re
-from cdent.generator import Base
+from cdent.generator import Generator as Base
 
 class Generator(Base):
-    def __init__(self):
-        Base.__init__(self)
-        self.comment_re = re.compile('^\s*#+', re.MULTILINE);
-
-    def generate(self, ast, path):
-        self.dispatch(ast)
-        self.write(path)
-
-    def gen_module(self, module):
-        for node in module.has:
-            self.dispatch(node)
-
     def gen_comment(self, comment):
         text = self.comment_re.sub('//', comment.val)
         self.put(text)
@@ -45,6 +32,3 @@ class Generator(Base):
 
     def gen_return(self, ret): 
         self.put('        return;\n')
-
-    def gen_string(self, string):
-        self.put('"' + string.val + '"')
