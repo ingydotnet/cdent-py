@@ -1,15 +1,15 @@
 %TAG ! tag:cdent.org,2010:
 --- !module
+name: World
 time: 2010-03-04T01:23:45
 from:
   name: World.py
   lang: py
   path: /Users/ingy/src/hello-world/World.py
-name: World
 has:
 - !comment
   line: 1
-  val: "# from cdent import *\n\n"
+  val: "This is World class :)\n"
 - !class
   line: 3
   name: World
@@ -20,11 +20,10 @@ has:
     type: void
     args: []
     has:
-    - !builtin
+    - !println
       line: 5
-      name: print
       args:
       - !string
-        val: 'Hello, world\n'
+        val: 'Hello, world'
     - !return
       value: ~

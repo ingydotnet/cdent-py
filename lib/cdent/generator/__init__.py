@@ -2,32 +2,17 @@
 Code generator base class for C'Dent
 """
 
-import re
-
 class Generator():
     def __init__(self, path):
-        self.path = path
-        self.code = []
-        self.comment_re = re.compile('^\s*#+', re.MULTILINE);
+        if path == '-':
+            import sys
+            self.out = sys.stdout
+        else:
+            self.out = file(path, 'w')
+        self.indentation = ''
 
     def generate(self, ast):
         self.dispatch(ast)
-        self.write()
-
-    def gen_module(self, module):
-        for node in module.has:
-            self.dispatch(node)
-
-    def gen_string(self, string):
-        self.put('"' + string.val + '"')
-
-    def write(self):
-        if self.path == '-':
-            import sys
-            f = sys.stdout
-        else:
-            f = file(self.path, 'w')
-        f.write(''.join(self.code)) 
 
     def dispatch(self, node):
         klass = str(node.__class__)
@@ -35,5 +20,29 @@ class Generator():
         method = 'gen_' + type
         getattr(self, method)(node)
 
-    def put(self, code):
-        self.code.append(code)
+    def write(self, string='', indent=False):
+        if indent:
+            self.out.write(self.indentation) 
+        self.out.write(string) 
+
+    def writeln(self, string='', indent=True):
+        if indent:
+            self.out.write(self.indentation) 
+        self.out.write(string + '\n') 
+
+    def indent(self):
+        self.indentation += '    '
+
+    def undent(self):
+        try:
+            self.indentation = self.indentation[:-4]
+        except IndexError:
+            self.indentation = ''
+
+    def gen_module(self, module):
+        for node in module.has:
+            self.dispatch(node)
+
+    def gen_string(self, string):
+        self.write('"' + string.val + '"')
+
