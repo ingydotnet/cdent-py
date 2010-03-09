@@ -1,29 +1,35 @@
 %TAG ! tag:cdent.org,2010:
---- !module
-name: World
+--- !ast
 time: 2010-03-04T01:23:45
+user: ingy
 from:
-  name: World.py
   lang: py
   path: /Users/ingy/src/hello-world/World.py
-has:
-- !comment
-  line: 1
-  val: "This is World class :)\n"
-- !class
-  line: 3
+module: !module
   name: World
   has:
-  - !method
-    line: 4
-    name: greet
-    type: void
-    args: []
+  - !comment
+    line: 1
+    type: doc
+    val: "This is World class :)\n"
+  - !comment
+    line: 2
+    type: blank
+    val: "\n"
+  - !class
+    line: 3
+    name: World
     has:
-    - !println
-      line: 5
-      args:
-      - !string
-        val: 'Hello, world'
-    - !return
-      value: ~
+    - !method
+      line: 4
+      name: greet
+      type: void
+      args: []
+      has:
+      - !println
+        line: 5
+        args:
+        - !string
+          val: 'Hello, world'
+      - !return
+        value: ~

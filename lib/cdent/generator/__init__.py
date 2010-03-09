@@ -3,16 +3,33 @@ Code generator base class for C'Dent
 """
 
 class Generator():
-    def __init__(self, path):
-        if path == '-':
+    LINE_COMMENT_PREFIX = '# '
+    BLOCK_COMMENT_BEGIN = '###\n'
+    BLOCK_COMMENT_PREFIX = '# '
+    BLOCK_COMMENT_END = '###\n'
+
+    language = {
+        'pm': 'Perl',
+        'py': 'Python',
+        'js': 'JavaScript',
+    }
+
+    def __init__(self):
+        self.output_path = '-'
+        self.generate_header = True
+        self.generate_trailer = True
+
+    def open(self):
+        if self.output_path == '-':
             import sys
-            self.out = sys.stdout
+            self.output = sys.stdout
         else:
-            self.out = file(path, 'w')
+            self.output = file(self.output_path, 'w')
         self.indentation = ''
 
-    def generate(self, ast):
-        self.dispatch(ast)
+    def generate(self, container):
+        for node in container:
+            self.dispatch(node)
 
     def dispatch(self, node):
         klass = str(node.__class__)
@@ -22,13 +39,22 @@ class Generator():
 
     def write(self, string='', indent=False):
         if indent:
-            self.out.write(self.indentation) 
-        self.out.write(string) 
+            self.output.write(self.indentation) 
+        self.output.write(string) 
 
     def writeln(self, string='', indent=True):
         if indent:
-            self.out.write(self.indentation) 
-        self.out.write(string + '\n') 
+            self.output.write(self.indentation) 
+        self.output.write(string + '\n') 
+
+    def write_line_comment(self, comment):
+        self.writeln(self.LINE_COMMENT_PREFIX + comment)
+
+    def write_block_comment(self, comment):
+        self.write(self.BLOCK_COMMENT_BEGIN)
+        for line in comment.splitlines():
+            self.writeln(self.BLOCK_COMMENT_PREFIX + line)
+        self.write(self.BLOCK_COMMENT_END)
 
     def indent(self):
         self.indentation += '    '
@@ -39,10 +65,68 @@ class Generator():
         except IndexError:
             self.indentation = ''
 
+    def generate_module(self, ast):
+        if self.generate_header:
+            self.cdent_header(ast)
+        self.dispatch(ast.module)
+        if self.generate_trailer:
+            self.cdent_trailer(ast)
+
     def gen_module(self, module):
         for node in module.has:
             self.dispatch(node)
 
+    def gen_comment(self, comment):
+        if comment.type == 'doc':
+            self.write_block_comment(comment.val)
+        else :
+            for line in comment.val.splitlines():
+                if comment.type == 'blank':
+                    self.writeln()
+                else:
+                    self.write_line_comment(line)
+
     def gen_string(self, string):
         self.write('"' + string.val + '"')
+
+    def cdent_header(self, ast):
+        header = "C'Dent generated module."
+        if self.generate_trailer:
+            header += " See trailer at end of file for full details."
+        self.write_line_comment(header)
+        self.writeln()
+
+    def cdent_trailer(self, ast):
+        from cdent import version
+        from time import strftime
+        _from = getattr(ast, 'from')
+        trailer = """\
+# C'Dent compilation details:
+---
+name: %s
+lang: %s
+time: %s
+user: %s
+input:
+  path: %s
+  lang: %s
+output:
+  path: %s
+  lang: %s
+cdent: %s
+"""
+        trailer = trailer % (
+            ast.module.name,
+            self.language[self.LANGUAGE_ID],
+            strftime("%Y-%m-%d %H:%M:%S"),
+            ast.user,
+            _from['path'],
+            self.language[_from['lang']],
+            '???',
+            self.language[self.LANGUAGE_ID],
+            version,
+        )
+
+        self.writeln()
+        self.write_block_comment(trailer)
 

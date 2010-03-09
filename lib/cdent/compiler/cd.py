@@ -2,6 +2,7 @@
 C'Dent compiler for already compiled AST
 """
 
+from cdent.compiler import Compiler as Base
 import cdent.ast
 
 from yaml import load
@@ -10,13 +11,9 @@ try:
 except ImportError:
     from yaml import Loader
 
-class Compiler():
-    def __init__(self, path):
-        self.path = path
-
-    def compile(self):
-        stream = file(self.path, 'r')
-        ast = load(stream)
+class Compiler(Base):
+    def compile_module(self):
+        ast = load(self.input)
         return ast
 
     def multi_constructor(loader, type, node):

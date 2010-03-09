@@ -5,17 +5,17 @@ JavaScript code generator for C'Dent
 from cdent.generator import Generator as Base
 
 class Generator(Base):
-    def gen_comment(self, comment):
-        for line in comment.val.splitlines():
-            self.writeln('// %s' % line)
-        self.writeln()
+    LANGUAGE_ID = 'js'
+    LINE_COMMENT_PREFIX = '// '
+    BLOCK_COMMENT_BEGIN = '/*\n'
+    BLOCK_COMMENT_PREFIX = ' * '
+    BLOCK_COMMENT_END = ' */\n'
 
     def gen_class(self, klass): 
         name = klass.name
         self.writeln('(this.%s = function() {}).prototype = {' % name)
         self.indent()
-        for node in klass.has:
-            self.dispatch(node)
+        self.generate(klass.has)
         self.undent()
         self.writeln('}')
 

@@ -5,11 +5,10 @@ Python code generator for C'Dent
 from cdent.generator import Generator as Base
 
 class Generator(Base):
-    def gen_comment(self, comment):
-        self.writeln('"""\\')
-        self.write(comment.val)
-        self.writeln('"""')
-        self.writeln()
+    LANGUAGE_ID = 'pm'
+    BLOCK_COMMENT_BEGIN = '"""\\\n'
+    BLOCK_COMMENT_PREFIX = ''
+    BLOCK_COMMENT_END = '"""\n'
 
     def gen_class(self, klass):
         name = klass.name

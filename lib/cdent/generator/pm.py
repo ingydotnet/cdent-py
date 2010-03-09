@@ -5,10 +5,7 @@ JavaScript code generator for C'Dent
 from cdent.generator import Generator as Base
 
 class Generator(Base):
-    def gen_comment(self, comment):
-        for line in comment.val.splitlines():
-            self.writeln('# %s' % line)
-        self.writeln()
+    LANGUAGE_ID = 'pm'
 
     def gen_class(self, klass): 
         name = klass.name
