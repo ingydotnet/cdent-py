@@ -1,4 +1,4 @@
-C'Dent - Portable Module Programming Language
+C'Dent - A Portable Module Programming Language
 
 C'Dent is a programming language that:
 
@@ -8,15 +8,22 @@ C'Dent is a programming language that:
    - Ruby
    - JavaScript
    - Java
-2) Compiles to a simple, well defined, Common DENimaTor, tree form.
+2) Compiles to a simple, well defined, Common'DENominaTor, tree form.
 3) Emits trees to several existing programming languages, including:
+   - C'Dent - compiled tree form serialized as YAML or XML
    - Perl
    - Python
    - Ruby
    - JavaScript
+   - PHP
+   - Perl 6
+   - Python 3000
    - Java
-   - C
+   - C++
 4) Is statically, and usually implicitly, typed at compile time.
 5) Effectively creates portable modules.
 
-...
+
+C'Dent is Copyright (c) 2010, Ingy dot Net
+
+C'Dent is licensed under the New BSD License. See the LICENSE file.

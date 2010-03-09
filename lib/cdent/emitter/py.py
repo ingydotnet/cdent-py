@@ -5,7 +5,7 @@ Python code emitter for C'Dent
 from cdent.emitter import Emitter as Base
 
 class Emitter(Base):
-    LANGUAGE_ID = 'pm'
+    LANGUAGE_ID = 'py'
     BLOCK_COMMENT_BEGIN = '"""\\\n'
     BLOCK_COMMENT_PREFIX = ''
     BLOCK_COMMENT_END = '"""\n'
