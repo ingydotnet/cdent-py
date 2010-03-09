@@ -2,17 +2,14 @@
 Code emitter base class for C'Dent
 """
 
+import cdent
+
 class Emitter():
+    # Default comment constants
     LINE_COMMENT_PREFIX = '# '
     BLOCK_COMMENT_BEGIN = '###\n'
     BLOCK_COMMENT_PREFIX = '# '
     BLOCK_COMMENT_END = '###\n'
-
-    language = {
-        'pm': 'Perl',
-        'py': 'Python',
-        'js': 'JavaScript',
-    }
 
     def __init__(self):
         self.output_path = '-'
@@ -94,47 +91,38 @@ class Emitter():
         self.write('"' + string.val + '"')
 
     def cdent_header(self, ast):
-        header = "C'Dent generated %s module." % self.language[self.LANGUAGE_ID]
+        header = "C'Dent generated %s module." % cdent.language(self.LANGUAGE_ID)
         if self.emit_trailer:
             header += " See trailer at end of file for details."
         self.write_line_comment(header)
         header = "C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved."
         self.write_line_comment(header)
+        self.writeln()
 #         header = "12345678901234567890123456789012345678901234567890123456789012345678901234567890"
 #         self.writeln(header)
-        self.writeln()
 
     def cdent_trailer(self, ast):
-        from cdent import version
         from time import strftime
-        _from = getattr(ast, 'from')
-        trailer = """\
+        cdent_version = cdent.version
+        module_name = ast.module.name
+        module_lang = cdent.language(self.LANGUAGE_ID)
+        compile_time = strftime("%Y-%m-%d %H:%M:%S")
+        compiled_by = ast.user
+        input_path = getattr(ast, 'from')['path']
+        input_lang = cdent.language(getattr(ast, 'from')['lang'])
+        self.writeln()
+        self.write_block_comment(self.trailer_text() % locals())
+
+    def trailer_text(self):
+        return """\
 # C'Dent compilation details:
 ---
-name: %s
-lang: %s
-time: %s
-user: %s
+name: %(module_name)s
+lang: %(module_lang)s
+time: %(compile_time)s
+user: %(compiled_by)s
 input:
-  path: %s
-  lang: %s
-output:
-  path: %s
-  lang: %s
-cdent: %s
+  path: %(input_path)s
+  lang: %(input_lang)s
+cdent: %(cdent_version)s
 """
-        trailer = trailer % (
-            ast.module.name,
-            self.language[self.LANGUAGE_ID],
-            strftime("%Y-%m-%d %H:%M:%S"),
-            ast.user,
-            _from['path'],
-            self.language[_from['lang']],
-            '???',
-            self.language[self.LANGUAGE_ID],
-            version,
-        )
-
-        self.writeln()
-        self.write_block_comment(trailer)
-
