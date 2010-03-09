@@ -11,6 +11,17 @@ class Command():
         self.action = None
         self.src = None
         self.to = None
+        self.parser = None
+        self.emitter = None
+        self.emit_header = None
+        self.emit_trailer = None
+        if 'CDENT_EMIT_INFO' in os.environ:
+            self.emit_header = bool(int(os.environ['CDENT_EMIT_INFO']))
+            self.emit_trailer = bool(int(os.environ['CDENT_EMIT_INFO']))
+        if 'CDENT_EMIT_HEADER' in os.environ:
+            self.emit_header = bool(int(os.environ['CDENT_EMIT_HEADER']))
+        if 'CDENT_EMIT_TRAILER' in os.environ:
+            self.emit_trailer = bool(int(os.environ['CDENT_EMIT_TRAILER']))
 
         parser = OptionParser()
 
@@ -71,6 +82,37 @@ class Command():
             help="output file -- default is stdout",
         )
 
+        # --emit-info
+        def cb_emit_info(option, opt, value, parser):
+            self.emit_header = bool(int(value))
+            self.emit_trailer = bool(int(value))
+        parser.add_option(
+            "--emit-info", type="choice",
+            choices=['0', '1'], metavar="0|1",
+            action="callback", callback=cb_emit_info,
+            help="emit info header & trailer -- default is on",
+        )
+
+        # --emit-header
+        def cb_emit_header(option, opt, value, parser):
+            self.emit_header = bool(int(value))
+        parser.add_option(
+            "--emit-header", type="choice",
+            choices=['0', '1'], metavar="0|1",
+            action="callback", callback=cb_emit_header,
+            help="emit info header -- default is on",
+        )
+
+        # --emit-trailer
+        def cb_emit_trailer(option, opt, value, parser):
+            self.emit_trailer = bool(int(value))
+        parser.add_option(
+            "--emit-trailer", type="choice",
+            choices=['0', '1'], metavar="0|1",
+            action="callback", callback=cb_emit_trailer,
+            help="emit info trailer -- default is on",
+        )
+
         # --version
         def cb_version(option, opt, value, parser):
             self.action = 'version'
@@ -82,6 +124,13 @@ class Command():
 
         # parse options
         (opts, args) = parser.parse_args()
+
+        # move options
+        if self.emitter:
+            if self.emit_header != None:
+                self.emitter.emit_header = self.emit_header
+            if self.emit_trailer != None:
+                self.emitter.emit_trailer = self.emit_trailer
 
         # validate options
         if (args):

@@ -27,9 +27,13 @@ class Emitter():
             self.output = file(self.output_path, 'w')
         self.indentation = ''
 
-    def emit(self, container):
+    def emit(self, container, indent=False):
+        if indent:
+            self.indent()
         for node in container:
             self.dispatch(node)
+        if indent:
+            self.undent()
 
     def dispatch(self, node):
         klass = str(node.__class__)

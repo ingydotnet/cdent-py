@@ -14,24 +14,18 @@ class Emitter(Base):
     def emit_class(self, klass): 
         name = klass.name
         self.writeln('(this.%s = function() {}).prototype = {' % name)
-        self.indent()
-        self.emit(klass.has)
-        self.undent()
+        self.emit(klass.has, indent=True)
         self.writeln('}')
 
     def emit_method(self, method): 
         name = method.name
         self.writeln(name + ': function() {')
-        self.indent()
-        for node in method.has:
-            self.dispatch(node)
-        self.undent()
+        self.emit(method.has, indent=True)
         self.writeln('}')
 
-    def emit_println(self, builtin): 
+    def emit_println(self, println): 
         self.write('print(', indent=True)
-        for node in builtin.args:
-            self.dispatch(node)
+        self.emit(println.args)
         self.writeln(');', indent=False)
 
     def emit_return(self, ret): 

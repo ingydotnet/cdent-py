@@ -19,7 +19,7 @@ class Parser(Base):
     def multi_constructor(loader, type, node):
         map = loader.construct_mapping(node)
         obj = getattr(cdent.ast, 'ast_' + type)()
-        for k in map.keys():
+        for k in map:
             setattr(obj, k, map[k])
         return obj
 

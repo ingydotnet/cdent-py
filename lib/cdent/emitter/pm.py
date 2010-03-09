@@ -12,24 +12,19 @@ class Emitter(Base):
         self.writeln('package %s;' % name)
         self.writeln('use Moose;')
         self.writeln()
-        for node in klass.has:
-            self.dispatch(node)
+        self.emit(klass.has)
         self.writeln()
         self.writeln('1;')
 
     def emit_method(self, method): 
         name = method.name
         self.writeln('sub %s {' % name)
-        self.indent()
-        for node in method.has:
-            self.dispatch(node)
-        self.undent()
+        self.emit(method.has, indent=True)
         self.writeln('}')
 
-    def emit_println(self, builtin): 
+    def emit_println(self, println): 
         self.write('print(', indent=True)
-        for node in builtin.args:
-            self.dispatch(node)
+        self.emit(println.args)
         self.writeln(');', indent=False)
 
     def emit_return(self, ret): 
