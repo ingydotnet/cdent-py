@@ -1,7 +1,5 @@
 """\
 Command line UI module for C'Dent
-
-:w|!PYTHONPATH=lib python cdent --compile --from=cd --to=js --input=hello-world/World.cd --output=hello-world/World.py
 """
 
 import os, sys
@@ -13,14 +11,6 @@ class Command():
         self.action = None
         self.src = None
         self.to = None
-        self.comp_config = {
-            'input': '-',
-        }
-        self.gen_config = {
-            'output': '-',
-            'generate_header': True,
-            'generate_trailer': True,
-        }
 
         parser = OptionParser()
 
