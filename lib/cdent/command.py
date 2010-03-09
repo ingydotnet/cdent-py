@@ -27,8 +27,8 @@ class Command():
         def cb_from(option, opt, value, parser):
             if self.action != 'compile':
                 raise OptionError('--from used before --compile')
-            exec "from cdent.compiler." + value + " import Compiler" in globals()
-            self.compiler = Compiler()
+            exec "from cdent.parser." + value + " import Parser" in globals()
+            self.parser = Parser()
             self.src = value
         parser.add_option(
             "--from", type="choice",
@@ -41,8 +41,8 @@ class Command():
         def cb_to(option, opt, value, parser):
             if self.action != 'compile':
                 raise OptionError('--to used before --compile')
-            exec "from cdent.generator." + value + " import Generator" in globals()
-            self.generator = Generator()
+            exec "from cdent.emitter." + value + " import Emitter" in globals()
+            self.emitter = Emitter()
             self.to = value
         parser.add_option(
             "--to", type="choice",
@@ -55,7 +55,7 @@ class Command():
         def cb_input(option, opt, value, parser):
             if not os.path.exists(value):
                 raise OptionError(value + ' file does not exist', opt)
-            self.compiler.input_path = value
+            self.parser.input_path = value
         parser.add_option(
             "--input", type="string",
             action="callback", callback=cb_input,
@@ -64,7 +64,7 @@ class Command():
 
         # --output=FILE
         def cb_output(option, opt, value, parser):
-            self.generator.output_path = value
+            self.emitter.output_path = value
         parser.add_option(
             "--output", type="string",
             action="callback", callback=cb_output,
@@ -98,10 +98,10 @@ class Command():
         getattr(self, self.action)()
 
     def compile(self):
-        self.compiler.open()
-        ast = self.compiler.compile_module()
-        self.generator.open()
-        self.generator.generate_module(ast)
+        self.parser.open()
+        ast = self.parser.parse_module()
+        self.emitter.open()
+        self.emitter.create_module(ast)
 
     def version(self):
         import cdent

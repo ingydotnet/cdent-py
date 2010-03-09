@@ -1,9 +1,9 @@
 """\
-Compiler base class for C'Dent
+Parser base class for C'Dent
 """
 
 import yaml
-class Compiler():
+class Parser():
     def __init__(self):
         self.input_path = '-'
 

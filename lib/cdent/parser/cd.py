@@ -1,8 +1,8 @@
 """\
-C'Dent compiler for already compiled AST
+C'Dent parser for already compiled AST
 """
 
-from cdent.compiler import Compiler as Base
+from cdent.parser import Parser as Base
 import cdent.ast
 
 from yaml import load
@@ -11,8 +11,8 @@ try:
 except ImportError:
     from yaml import Loader
 
-class Compiler(Base):
-    def compile_module(self):
+class Parser(Base):
+    def parse_module(self):
         ast = load(self.input)
         return ast
 

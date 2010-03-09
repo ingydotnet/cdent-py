@@ -1,8 +1,8 @@
 """\
-Code generator base class for C'Dent
+Code emitter base class for C'Dent
 """
 
-class Generator():
+class Emitter():
     LINE_COMMENT_PREFIX = '# '
     BLOCK_COMMENT_BEGIN = '###\n'
     BLOCK_COMMENT_PREFIX = '# '
@@ -16,8 +16,8 @@ class Generator():
 
     def __init__(self):
         self.output_path = '-'
-        self.generate_header = True
-        self.generate_trailer = True
+        self.emit_header = True
+        self.emit_trailer = True
 
     def open(self):
         if self.output_path == '-':
@@ -27,14 +27,14 @@ class Generator():
             self.output = file(self.output_path, 'w')
         self.indentation = ''
 
-    def generate(self, container):
+    def emit(self, container):
         for node in container:
             self.dispatch(node)
 
     def dispatch(self, node):
         klass = str(node.__class__)
         type = klass[klass.index('_') + 1:]
-        method = 'gen_' + type
+        method = 'emit_' + type
         getattr(self, method)(node)
 
     def write(self, string='', indent=False):
@@ -65,18 +65,18 @@ class Generator():
         except IndexError:
             self.indentation = ''
 
-    def generate_module(self, ast):
-        if self.generate_header:
+    def create_module(self, ast):
+        if self.emit_header:
             self.cdent_header(ast)
         self.dispatch(ast.module)
-        if self.generate_trailer:
+        if self.emit_trailer:
             self.cdent_trailer(ast)
 
-    def gen_module(self, module):
+    def emit_module(self, module):
         for node in module.has:
             self.dispatch(node)
 
-    def gen_comment(self, comment):
+    def emit_comment(self, comment):
         if comment.type == 'doc':
             self.write_block_comment(comment.val)
         else :
@@ -86,12 +86,12 @@ class Generator():
                 else:
                     self.write_line_comment(line)
 
-    def gen_string(self, string):
+    def emit_string(self, string):
         self.write('"' + string.val + '"')
 
     def cdent_header(self, ast):
         header = "C'Dent generated module."
-        if self.generate_trailer:
+        if self.emit_trailer:
             header += " See trailer at end of file for full details."
         self.write_line_comment(header)
         self.writeln()
