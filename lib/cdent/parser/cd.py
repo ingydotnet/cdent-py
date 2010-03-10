@@ -2,14 +2,14 @@
 C'Dent parser for already compiled AST
 """
 
-from cdent.parser import Parser as Base
-import cdent.ast
-
 from yaml import load
 try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
+
+import cdent.ast
+from cdent.parser import Parser as Base
 
 class Parser(Base):
     def parse_module(self):

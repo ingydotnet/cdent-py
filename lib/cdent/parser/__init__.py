@@ -3,6 +3,7 @@ Parser base class for C'Dent
 """
 
 import yaml
+
 class Parser():
     def __init__(self):
         self.input_path = '-'

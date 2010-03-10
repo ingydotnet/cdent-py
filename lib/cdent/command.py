@@ -2,7 +2,8 @@
 Command line UI module for C'Dent
 """
 
-import os, sys
+import os
+import sys
 from optparse import *
 
 class Command():
