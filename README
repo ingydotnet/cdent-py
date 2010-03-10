@@ -26,6 +26,8 @@ C'Dent is a programming language that:
    - Perl 6
    - Python 3
    - C++
+   - CIL (.NET Common Intermediate Language)
+   - PIR (Parrot Intermediate Runtime)
 5) Uses static implicit typing to assign types to all objects at
    compile time, and throw syntax errors for type conflicts. Strong
    typing is required to generate equivalent code in the various

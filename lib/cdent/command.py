@@ -43,7 +43,7 @@ class Command():
             self.src = value
         parser.add_option(
             "--from", type="choice",
-            choices=['cd', 'js', 'py'],
+            choices=['cd', 'java', 'js', 'pm', 'py', 'rb'],
             action="callback", callback=cb_from,
             help="source language: cd|js|py"
         )
@@ -57,9 +57,9 @@ class Command():
             self.to = value
         parser.add_option(
             "--to", type="choice",
-            choices=['cd', 'cpp', 'java', 'js', 'php', 'pm', 'pm6', 'py', 'py3'],
+            choices=['cd', 'cpp', 'java', 'js', 'php', 'pm', 'pm6', 'py', 'py3', 'rb'],
             action="callback", callback=cb_to,
-            help="target language: cd|cpp|java|js|php|pm|pm6|py|py3"
+            help="target language: cd|cpp|java|js|php|pm|pm6|py|py3|rb"
         )
 
         # --input=FILE
