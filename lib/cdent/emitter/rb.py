@@ -7,10 +7,10 @@ from cdent.emitter import Emitter as Base
 class Emitter(Base):
     LANGUAGE_ID = 'rb'
 
-    def emit_class(self, klass): 
-        name = klass.name
+    def emit_class(self, class_): 
+        name = class_.name
         self.writeln('class %s' % name)
-        self.emit(klass.has, indent=True)
+        self.emit(class_.has, indent=True)
         self.writeln('end')
 
     def emit_method(self, method): 

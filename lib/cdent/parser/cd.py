@@ -13,14 +13,11 @@ from cdent.parser import Parser as Base
 
 class Parser(Base):
     def parse_module(self):
-        ast = load(self.input)
-        return ast
+        return load(self.input)
 
     def multi_constructor(loader, type, node):
-        map = loader.construct_mapping(node)
         obj = getattr(cdent.ast, 'ast_' + type)()
-        for k in map:
-            setattr(obj, k, map[k])
+        obj.__dict__.update(loader.construct_mapping(node))
         return obj
 
     Loader.add_multi_constructor('tag:cdent.org,2010:', multi_constructor)

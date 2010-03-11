@@ -10,10 +10,10 @@ class Emitter(Base):
     BLOCK_COMMENT_PREFIX = ''
     BLOCK_COMMENT_END = '"""\n'
 
-    def emit_class(self, klass):
-        name = klass.name
+    def emit_class(self, class_):
+        name = class_.name
         self.writeln('class %s():' % name)
-        self.emit(klass.has, indent=True)
+        self.emit(class_.has, indent=True)
 
     def emit_method(self, method): 
         name = method.name

@@ -10,7 +10,7 @@ class Command():
     def __init__(self, args):
         sys.argv = args
         self.action = None
-        self.src = None
+        self.from_ = None
         self.to = None
         self.parser = None
         self.emitter = None
@@ -41,7 +41,7 @@ class Command():
                 raise OptionError('--from used before --compile')
             exec "from cdent.parser." + value + " import Parser" in globals()
             self.parser = Parser()
-            self.src = value
+            self.from_ = value
         parser.add_option(
             "--from", type="choice",
             choices=['cd', 'java', 'js', 'pm', 'py', 'rb'],
@@ -139,7 +139,7 @@ class Command():
         if (not self.action):
             raise OptionError('is required', '--compile | --help | --version')
         if self.action == 'compile':
-            if (not self.src):
+            if (not self.from_):
                 raise OptionError('is required', '--from')
             if (not self.to):
                 raise OptionError('is required', '--to')
@@ -154,5 +154,5 @@ class Command():
         self.emitter.create_module(ast)
 
     def version(self):
-        import cdent
-        print "C'Dent version '%s'" % cdent.version
+        import cdent.compiler
+        print "C'Dent version '%s'" % cdent.compiler.version()

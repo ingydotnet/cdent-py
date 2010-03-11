@@ -2,7 +2,7 @@
 Code emitter base class for C'Dent
 """
 
-import cdent
+import cdent.compiler
 
 class Emitter():
     # Default comment constants
@@ -91,7 +91,10 @@ class Emitter():
         self.write('"' + string.val + '"')
 
     def cdent_header(self, ast):
-        header = "C'Dent generated %s module." % cdent.language(self.LANGUAGE_ID)
+        header = (
+            "C'Dent generated %s module." %
+            cdent.compiler.language(self.LANGUAGE_ID)
+        )
         if self.emit_trailer:
             header += " See trailer at end of file for details."
         self.write_line_comment(header)
@@ -103,13 +106,13 @@ class Emitter():
 
     def cdent_trailer(self, ast):
         from time import strftime
-        cdent_version = cdent.version
+        cdent_version = cdent.compiler.__version__
         module_name = ast.module.name
-        module_lang = cdent.language(self.LANGUAGE_ID)
+        module_lang = cdent.compiler.language(self.LANGUAGE_ID)
         compile_time = strftime("%Y-%m-%d %H:%M:%S")
         compiled_by = ast.user
         input_path = getattr(ast, 'from')['path']
-        input_lang = cdent.language(getattr(ast, 'from')['lang'])
+        input_lang = cdent.compiler.language(getattr(ast, 'from')['lang'])
         self.writeln()
         self.write_block_comment(self.trailer_text() % locals())
 

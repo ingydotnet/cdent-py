@@ -7,12 +7,12 @@ from cdent.emitter import Emitter as Base
 class Emitter(Base):
     LANGUAGE_ID = 'pm'
 
-    def emit_class(self, klass): 
-        name = klass.name
+    def emit_class(self, class_): 
+        name = class_.name
         self.writeln('package %s;' % name)
         self.writeln('use Moose;')
         self.writeln()
-        self.emit(klass.has)
+        self.emit(class_.has)
         self.writeln()
         self.writeln('1;')
 
