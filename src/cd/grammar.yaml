@@ -1,0 +1,44 @@
+---
+# RegExp atoms
+ALL: '[\s\S]'           # Any unicode character
+WS:  '[\ \t]'           # A space or tab character
+BR:  '\n'               # A newline character
+EOL: '\r?\n'            # A Unix or DOS line ending
+ANY: '.'                # Any character except newline
+LC:  '[a-z]'            # Lower case ASCII alphabetic character
+UC:  '[A-Z]'            # Upper case ASCII alphabetic character
+AN:  '[A-Za-z0-9]'      # ASCII alphanumeric character
+WC:  '\w'               # ie '[A-Za-z0-9_]' - A "word" character
+NUM: '[0-9]'            # A numeric digit
+DS:  '\$'               # A dollar sign
+DOT: '\.'               # A period character
+OCT: '#'                # An octothorpe (or hash) character
+BS:  '\\'               # A backslash character
+SQ:  "'"                # A single quote character
+DB:  '"'                # A double quote character
+
+Line: /$CHAR*$EOL/
+BlankLine: /$WS*$EOL/
+
+# Module parsing grammar
+Module:
+- DocComment
+- Comment*
+- IncludeCDent
+- Comment*
+- Class
+- (Class|Comment)*
+- Ending
+- Comments*
+
+DocComment:
+- DocCommentBegin
+- DocCommentLine*
+- DocCommentEnd
+
+Comment: (LineComment|BlankLine)
+
+Ending: //
+
+LineComment: /$line_comment_start($Line)/
+

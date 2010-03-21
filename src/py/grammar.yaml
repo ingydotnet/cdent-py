@@ -1,0 +1,16 @@
+line_comment_start: '#'
+
+TQ: '""""'              # Python triple quote
+
+DocCommentBegin: /$TQ$BS$WS*$EOL/
+DocCommentLine: /($ANY*$EOL)/
+DocCommentEnd: /$TQ$WS*$EOL/
+
+IncludeCDent: /from cdent import */
+
+Class:
+- ClassSignatureLine
+- ClassBody
+
+ClassSignatureLine: /class$WS+$Id$OP$Id?$CP$CN$EOL/
+
