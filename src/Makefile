@@ -1,6 +1,18 @@
+ALL = base perl python
+ALL_GRAMMAR_MODULES = $(ALL:%=../cdent/parser/%/grammar.py)
+ALL_DIRS = $(ALL:%=../cdent/parser/%/)
+ALL_INDEX = $(ALL:%=../cdent/parser/%/__init__.py)
 
-../lib/cdent/parser/cdent/grammar.py: cd/grammar.yaml
-	bin/grammar-module $< $@
+all: $(ALL_DIRS) $(ALL_INDEX) $(ALL_GRAMMAR_MODULES)
 
-../lib/cdent/parser/python/grammar.py: py/grammar.yaml
-	bin/grammar-module $< $@
+../cdent/parser/%/grammar.py: grammar/%.yaml ../cdent/parser/%/
+	bin/grammar-module $< > $@
+
+$(ALL_DIRS):
+	mkdir -p $@
+
+$(ALL_INDEX):
+	touch $@
+
+clean:
+	rm -fr $(ALL_DIRS)

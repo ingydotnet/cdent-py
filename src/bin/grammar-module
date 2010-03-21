@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+"""
+
+Usage:
+        grammar.module grammar/lang.yaml
+
+"""
+import sys
+
+import yaml
+
+if len(sys.argv) != 2:
+    raise Exception(__doc__)
+
+grammar_file = sys.argv[1]
+data = yaml.load(file(grammar_file))
+
+lang = grammar_file[8:-5]
+Lang = lang[0].upper() + lang[1:]
+
+print """\
+\"\"\"
+C'Dent %(Lang)s parser grammar module.
+\"\"\"
+""" % locals(),
+
+if lang != 'base':
+    print """
+from cdent.parser.base.grammar import Grammar as Base
+""" % locals(),
+    base = 'Base'
+else:
+    base = 'object'
+
+print """
+class Grammar(%(base)s):
+    def __init__(self):
+        super(Grammar, self).__init__()
+        self.__dict__.update(%(data)s)
+""" % locals(),
