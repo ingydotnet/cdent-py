@@ -1,9 +1,14 @@
+.PHONY: default build test install register sdist clean upload
+
 default:
+	@echo 'No default action for make'
 
-test:
-	python tests/test_hello-word.t
+build test install register sdist clean::
+	python setup.py $@
 
-# PYTHONPATH=lib python cdent --compile --from=cd --to=js --input=hello-world/World.cd --output=output.js
+upload:: clean register
+	python setup.py sdist $@
 
-clean:
-	rm -f output.js lib/cdent/*.pyc lib/cdent/*/*.pyc hello-world/*.pyc
+clean::
+	find . -name '*.pyc' | xargs rm
+	rm -fr build dist MANIFEST

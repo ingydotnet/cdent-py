@@ -2,6 +2,8 @@
 Abstact Syntax Tree classes for C'Dent
 """
 
+class AST(): pass
+
 class ast_ast(): pass
 class ast_module(): pass
 class ast_comment(): pass

@@ -6,35 +6,67 @@ Usage:
 
 """
 import sys
+from warnings import warn
 
 import yaml
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
-if len(sys.argv) != 2:
-    raise Exception(__doc__)
+sys.path.insert(0, '..')
 
-grammar_file = sys.argv[1]
-data = yaml.load(file(grammar_file))
+from cdent.grammar import *
 
-lang = grammar_file[8:-5]
-Lang = lang[0].upper() + lang[1:]
+class GrammarModule():
+    def __init__(self, path):
+        def multi_constructor(loader, node):
+            warn(node)
+#             obj = getattr(cdent.ast, 'ast_' + type)()
+#             obj.__dict__.update(loader.construct_mapping(node))
+            return node.value[::-1]
+            return node
 
-print """\
+        Loader.add_constructor(
+            u'tag:yaml.org,2002:str',
+            multi_constructor
+        )
+#         Loader.add_multi_constructor(
+#             u'tag:yaml.org,2002:',
+#             multi_constructor
+#         )
+
+        self.grammar = yaml.load(file(path))
+
+    def generate_module(self, lang):
+        Lang = lang[0].upper() + lang[1:]
+        data = self.grammar
+
+        module = """\
 \"\"\"
 C'Dent %(Lang)s parser grammar module.
 \"\"\"
-""" % locals(),
+""" % locals()
 
-if lang != 'base':
-    print """
+        if lang != 'base':
+            module += """
 from cdent.parser.base.grammar import Grammar as Base
-""" % locals(),
-    base = 'Base'
-else:
-    base = 'object'
+""" % locals()
+            base = 'Base'
+        else:
+            base = 'object'
 
-print """
+        module += """
 class Grammar(%(base)s):
     def __init__(self):
-        super(Grammar, self).__init__()
         self.__dict__.update(%(data)s)
-""" % locals(),
+""" % locals()
+ 
+        return module
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise Exception(__doc__)
+    grammar_file = sys.argv[1]
+    lang = grammar_file[8:-5]
+    print GrammarModule(grammar_file).generate_module(lang)
