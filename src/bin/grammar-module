@@ -2,11 +2,14 @@
 """
 
 Usage:
-        grammar.module grammar/lang.yaml
+        grammar.module yaml-file-list
 
 """
+import re
 import sys
 from warnings import warn
+import pprint
+
 
 import yaml
 try:
@@ -19,54 +22,105 @@ sys.path.insert(0, '..')
 from cdent.grammar import *
 
 class GrammarModule():
-    def __init__(self, path):
-        def multi_constructor(loader, node):
-            warn(node)
-#             obj = getattr(cdent.ast, 'ast_' + type)()
-#             obj.__dict__.update(loader.construct_mapping(node))
-            return node.value[::-1]
-            return node
+    def __init__(self, paths):
+        dict = {}
+        for path in paths:
+            dict.update(yaml.load(file(path)))
+        self.grammar = {}
+        regexps = {}
+        for k in dict:
+            v = dict[k]
+            t = v.__class__.__name__
+            if t == 'str' and v[0] == '/':
+                regexps[k] = v[1:-1]
+            else:
+                self.grammar[k] = v
+        def f(m):
+            n = m.groups()[0]
+            if n not in regexps:
+                raise Exception("'%s' is not defined in the grammar" % n)
+            return regexps[n]
+        for k in regexps:
+            v = regexps[k]
+            while True:
+                v2 = re.sub(r'\$(\w+)', f, v)
+                if v2 == v:
+                    break
+                v = v2
+            self.grammar[k] = Re({'_': v})
+        for k in self.grammar:
+            v = self.grammar[k]
+            t = v.__class__.__name__
+            if t == 'str':
+                self.grammar[k] = self.parse_str(v)
+            elif t == 'list':
+                list = []
+                for e in v:
+                    list.append(self.parse_str(e))
+                self.grammar[k] = All({'_': list})
 
-        Loader.add_constructor(
-            u'tag:yaml.org,2002:str',
-            multi_constructor
-        )
-#         Loader.add_multi_constructor(
-#             u'tag:yaml.org,2002:',
-#             multi_constructor
-#         )
+    def parse_str(self, str):
+        d = {}
+        if str[-1] in '*+?':
+            d['x'] = str[-1]
+            str = str[0:-1]
+        if str[0] == '!':
+            str = str[1:]
+            d['_'] = self.parse_str(str)
+            return Not(d)
+        elif str[0] == '(':
+            str = str[1:-1]
+            list = []
+            a = str.split('|')
+            for e in a:
+                list.append(self.parse_str(e))
+            d['_'] = list
+            return Any(d)
+        elif re.match(r'^\w+$', str):
+            d['_'] = str
+            return Rule(d)
+        else:
+            raise Exception("Failed to parse '%s'" % str)
+         
+# 
+# 
+#                 else:
+#                     m = re.match('^(\w+)([\*\+\?])?$', v)
+#                     if m:
+#                         g = m.groups()
+#                         self.grammar[k] = Rule({'_': g[0], 'm': g[1]})
+#                     else:
+#                         self.grammar[k] = v
+#             elif t == 'list':
+#                 self.grammar[k] = All({'_': v})
+#             else:
+#                 raise Exception
 
-        self.grammar = yaml.load(file(path))
+
 
     def generate_module(self, lang):
         Lang = lang[0].upper() + lang[1:]
-        data = self.grammar
+        data = pprint.pformat(self.grammar, indent=2)
 
         module = """\
 \"\"\"
 C'Dent %(Lang)s parser grammar module.
 \"\"\"
-""" % locals()
 
-        if lang != 'base':
-            module += """
-from cdent.parser.base.grammar import Grammar as Base
-""" % locals()
-            base = 'Base'
-        else:
-            base = 'object'
+from cdent.grammar import *
 
-        module += """
-class Grammar(%(base)s):
+class Grammar():
     def __init__(self):
-        self.__dict__.update(%(data)s)
+        self.__dict__.update(
+%(data)s
+)
 """ % locals()
  
         return module
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         raise Exception(__doc__)
-    grammar_file = sys.argv[1]
-    lang = grammar_file[8:-5]
-    print GrammarModule(grammar_file).generate_module(lang)
+    grammar_files = sys.argv[1:]
+    lang = grammar_files[-1][8:-5]
+    print GrammarModule(grammar_files).generate_module(lang)

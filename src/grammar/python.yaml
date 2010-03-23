@@ -1,6 +1,6 @@
-line_comment_start: '#'
+TQ: /""""/              # Python triple quote
 
-TQ: '""""'              # Python triple quote
+line_comment_start: /#/
 
 DocCommentBegin: /$TQ$BS$WS*$EOL/
 DocCommentLine: /($ANY*$EOL)/
@@ -12,5 +12,6 @@ Class:
 - ClassSignatureLine
 - ClassBody
 
-ClassSignatureLine: /class$WS+$Id$OP$Id?$CP$CN$EOL/
+ClassSignatureLine: /class$WS+$Id$LP$Id?$RP$CN$EOL/
 
+Id: /$WC+/
