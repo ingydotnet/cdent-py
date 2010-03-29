@@ -16,6 +16,13 @@ module: !Module
     line: 2
     type: blank
     val: "\n"
+  - !IncludeCDent
+    line: 2
+    type: blank
+  - !Comment
+    line: 2
+    type: blank
+    val: "\n"
   - !Class
     line: 3
     name: World

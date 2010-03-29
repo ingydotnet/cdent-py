@@ -2,6 +2,9 @@
 Code emitter base class for C'Dent
 """
 
+import sys
+import StringIO
+
 import cdent.compiler
 
 class Emitter():
@@ -12,17 +15,17 @@ class Emitter():
     BLOCK_COMMENT_END = '###\n'
 
     def __init__(self):
-        self.output_path = '-'
         self.emit_header = True
         self.emit_trailer = True
-
-    def open(self):
-        if self.output_path == '-':
-            import sys
-            self.output = sys.stdout
-        else:
-            self.output = file(self.output_path, 'w')
         self.indentation = ''
+
+    def open(self, output):
+        if isinstance(output, str) and output == '-':
+            self.output = sys.stdout
+        elif isinstance(output, (file, StringIO.StringIO)):
+            self.output = output
+        else:
+            raise Exception("input to open is invalid")
 
     def emit(self, container, indent=False):
         if indent:
@@ -33,8 +36,8 @@ class Emitter():
             self.undent()
 
     def dispatch(self, node):
-        klass = str(node.__class__)
-        type = klass[klass.index('_') + 1:]
+        class_ = str(node.__class__)
+        type = class_[class_.rindex('.') + 1:].lower()
         method = 'emit_' + type
         getattr(self, method)(node)
 
@@ -100,7 +103,6 @@ class Emitter():
         self.write_line_comment(header)
         header = "C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved."
         self.write_line_comment(header)
-        self.writeln()
 #         header = "12345678901234567890123456789012345678901234567890123456789012345678901234567890"
 #         self.writeln(header)
 

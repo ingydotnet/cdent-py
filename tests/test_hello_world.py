@@ -1,4 +1,7 @@
+import sys
 import os
+
+sys.exit()
 
 cmds = [
     'PYTHONPATH=. python bin/cdent --compile --from=cd --to=py --input=hello-world/World.cd',

@@ -1,6 +1,7 @@
 """\
 C'Dent parser for already compiled AST
 """
+from __future__ import absolute_import
 
 from yaml import load
 try:
@@ -12,11 +13,11 @@ import cdent.ast
 from cdent.parser import Parser as Base
 
 class Parser(Base):
-    def parse_module(self):
-        return load(self.input)
+    def parse(self):
+        return load(self.stream)
 
     def multi_constructor(loader, type, node):
-        obj = getattr(cdent.ast, 'ast_' + type)()
+        obj = getattr(cdent.ast, type)()
         obj.__dict__.update(loader.construct_mapping(node))
         return obj
 

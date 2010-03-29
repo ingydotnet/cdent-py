@@ -2,9 +2,14 @@
 Command line UI module for C'Dent
 """
 
+
 import os
 import sys
+
 from optparse import *
+
+import cdent.compiler
+
 
 class Command():
     def __init__(self, args):
@@ -39,12 +44,13 @@ class Command():
         def cb_from(option, opt, value, parser):
             if self.action != 'compile':
                 raise OptionError('--from used before --compile')
-            exec "from cdent.parser." + value + " import Parser" in globals()
+            class_ = cdent.compiler.class_(value)
+            exec "from cdent.parser." + class_ + " import Parser" in globals()
             self.parser = Parser()
             self.from_ = value
         parser.add_option(
             "--from", type="choice",
-            choices=['cd', 'java', 'js', 'pm', 'py', 'rb'],
+            choices=['cd.yaml', 'java', 'js', 'pm', 'py', 'rb'],
             action="callback", callback=cb_from,
             help="source language: cd|js|py"
         )
@@ -53,7 +59,8 @@ class Command():
         def cb_to(option, opt, value, parser):
             if self.action != 'compile':
                 raise OptionError('--to used before --compile')
-            exec "from cdent.emitter." + value + " import Emitter" in globals()
+            class_ = cdent.compiler.class_(value)
+            exec "from cdent.emitter." + class_ + " import Emitter" in globals()
             self.emitter = Emitter()
             self.to = value
         parser.add_option(
@@ -67,7 +74,7 @@ class Command():
         def cb_input(option, opt, value, parser):
             if not os.path.exists(value):
                 raise OptionError(value + ' file does not exist', opt)
-            self.parser.input_path = value
+            self.input = file(value, 'r').read()
         parser.add_option(
             "--input", type="string",
             action="callback", callback=cb_input,
@@ -148,11 +155,8 @@ class Command():
         getattr(self, self.action)()
 
     def compile(self):
-        self.parser.open()
-        ast = self.parser.parse_module()
-        self.emitter.open()
+        ast = self.parser.parse(self.input)
         self.emitter.create_module(ast)
 
     def version(self):
-        import cdent.compiler
         print "C'Dent version '%s'" % cdent.compiler.version()

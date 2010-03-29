@@ -17,6 +17,24 @@ id_to_language = {
     'rb':   'Ruby',
 }
 
+id_to_class = {
+    'cd':   'cdent',
+    'cd.yaml': 'cdent.yaml',
+    'cd.xml': 'cdent.xml',
+    'cpp':  'cpp',
+    'java': 'java',
+    'js':   'javascript',
+    'php':  'php',
+    'pm':   'perl',
+    'pm6':  'perl6',
+    'py':   'python',
+    'py3':  'python3',
+    'rb':   'ruby',
+}
+
 def language(id):
     return id_to_language[id]
+
+def class_(id):
+    return id_to_class[id]
 
