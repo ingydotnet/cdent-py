@@ -1,25 +1,33 @@
 import sys
 import os
 
-sys.exit()
+import cdent.test
 
-cmds = [
-    'PYTHONPATH=. python bin/cdent --compile --from=cd --to=py --input=hello-world/World.cd',
-    'PYTHONPATH=. python bin/cdent --compile --from=cd --to=pm --input=hello-world/World.cd',
-    'PYTHONPATH=. python bin/cdent --compile --from=cd --to=js --input=hello-world/World.cd',
-    'PYTHONPATH=. python bin/cdent --compile --from=cd --to=rb --input=hello-world/World.cd',
-    'cd hello-world; js hello_world.js',
-    'cd hello-world; php hello_world.php',
-    'cd hello-world; perl6 hello_world.p6',
-    'cd hello-world; perl hello_world.pl',
-    'cd hello-world; python hello_world.py',
-    'cd hello-world; python3 hello_world.py3',
-    'cd hello-world; ruby hello_world.rb',
-    '# Done',
-]
+class TestHelloWorld(cdent.test.TestCase):
+    cmds = [
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=py --input=hello-world/World.cd --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=pm --input=hello-world/World.cd --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=js --input=hello-world/World.cd --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=rb --input=hello-world/World.cd --output=output',
+        'cd hello-world; js hello_world.js',
+        'cd hello-world; php hello_world.php',
+        'cd hello-world; perl6 hello_world.p6',
+        'cd hello-world; perl hello_world.pl',
+        'cd hello-world; python hello_world.py',
+        'cd hello-world; python3 hello_world.py3',
+        'cd hello-world; ruby hello_world.rb',
+        '# Done',
+    ]
 
-for cmd in cmds:
-    print cmd
-    if os.system(cmd):
-        print "Command failed: '%s'" % cmd
-        break
+    def test_commands(self):
+        for cmd in self.cmds:
+            print cmd
+            rc = os.system(cmd)
+            self.assertTrue(rc == 0, "Command: %s" % cmd)
+
+    def tearDown(self):
+        if os.path.exists('output'):
+            os.unlink('output')
+
+if __name__ == '__main__':
+    cdent.test.main()

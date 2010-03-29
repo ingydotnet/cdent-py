@@ -28,6 +28,8 @@ class Command():
             self.emit_header = bool(int(os.environ['CDENT_EMIT_HEADER']))
         if 'CDENT_EMIT_TRAILER' in os.environ:
             self.emit_trailer = bool(int(os.environ['CDENT_EMIT_TRAILER']))
+        self.input = sys.stdin
+        self.output = sys.stdout
 
         parser = OptionParser()
 
@@ -50,7 +52,7 @@ class Command():
             self.from_ = value
         parser.add_option(
             "--from", type="choice",
-            choices=['cd.yaml', 'java', 'js', 'pm', 'py', 'rb'],
+            choices=['yaml', 'java', 'js', 'pm', 'py', 'rb'],
             action="callback", callback=cb_from,
             help="source language: cd|js|py"
         )
@@ -74,7 +76,7 @@ class Command():
         def cb_input(option, opt, value, parser):
             if not os.path.exists(value):
                 raise OptionError(value + ' file does not exist', opt)
-            self.input = file(value, 'r').read()
+            self.input = file(value, 'r')
         parser.add_option(
             "--input", type="string",
             action="callback", callback=cb_input,
@@ -83,7 +85,7 @@ class Command():
 
         # --output=FILE
         def cb_output(option, opt, value, parser):
-            self.emitter.output_path = value
+            self.output = file(value, 'w')
         parser.add_option(
             "--output", type="string",
             action="callback", callback=cb_output,
@@ -155,7 +157,9 @@ class Command():
         getattr(self, self.action)()
 
     def compile(self):
-        ast = self.parser.parse(self.input)
+        self.parser.open(self.input)
+        ast = self.parser.parse()
+        self.emitter.open(self.output)
         self.emitter.create_module(ast)
 
     def version(self):
