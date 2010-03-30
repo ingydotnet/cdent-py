@@ -5,13 +5,13 @@ ALL_TESTS = $(shell echo tests/*.py)
 default:
 	@echo 'No default action for make'
 
-build install register sdist clean::
+build test install register sdist clean::
 	python setup.py $@
 
 upload:: clean register
 	python setup.py sdist $@
 
-test:: $(ALL_TESTS)
+tests:: $(ALL_TESTS)
 
 $(ALL_TESTS): run
 	@python -c 'print " Running test: $@ ".center(70, "-") + "\n"'

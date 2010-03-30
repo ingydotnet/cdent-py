@@ -1,7 +1,6 @@
 import os
 
 import unittest
-from unittest import main
 
 class TestCase(unittest.TestCase):
     def tearDown(self):
@@ -17,3 +16,7 @@ class TestCase(unittest.TestCase):
             os.system('diff -u expected got')
 
         self.assertEquals(got, expected, msg)
+
+class main():
+    def __init__(self, module='__main__', argv=None):
+        unittest.main(module=module, argv=argv)
