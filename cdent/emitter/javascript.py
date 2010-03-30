@@ -11,6 +11,9 @@ class Emitter(Base):
     BLOCK_COMMENT_PREFIX = ' * '
     BLOCK_COMMENT_END = ' */\n'
 
+    def emit_includecdent(self, includecdent): 
+        self.writeln("load('cdent/run.js');")
+
     def emit_class(self, class_): 
         name = class_.name
         self.writeln('(this.%s = function() {}).prototype = {' % name)

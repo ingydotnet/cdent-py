@@ -20,7 +20,7 @@ class TestPythonParser(cdent.test.TestCase):
         emitter.emit_trailer = False
         output = StringIO.StringIO()
         emitter.open(output)
-        emitter.create_module(self.ast)
+        emitter.emit_ast(self.ast)
         got = output.getvalue()
         expected = file('tests/modules/world.py').read()
 
@@ -33,7 +33,7 @@ class TestPythonParser(cdent.test.TestCase):
         emitter.emit_trailer = False
         output = StringIO.StringIO()
         emitter.open(output)
-        emitter.create_module(self.ast)
+        emitter.emit_ast(self.ast)
         got = output.getvalue()
         expected = file('tests/modules/world.pm').read()
 

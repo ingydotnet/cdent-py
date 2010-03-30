@@ -69,10 +69,10 @@ class Emitter():
         except IndexError:
             self.indentation = ''
 
-    def create_module(self, ast):
+    def emit_ast(self, ast):
         if self.emit_header:
             self.cdent_header(ast)
-        self.dispatch(ast.module)
+        self.dispatch(ast.has)
         if self.emit_trailer:
             self.cdent_trailer(ast)
 
@@ -109,7 +109,7 @@ class Emitter():
     def cdent_trailer(self, ast):
         from time import strftime
         cdent_version = cdent.compiler.__version__
-        module_name = ast.module.name
+        module_name = ast.has.name
         module_lang = cdent.compiler.language(self.LANGUAGE_ID)
         compile_time = strftime("%Y-%m-%d %H:%M:%S")
         compiled_by = ast.user

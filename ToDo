@@ -1,10 +1,5 @@
+- cdent.parser.cdent.xml
+- cdent.emitter.cdent.xml
+- cdent.emitter.cdent.yaml
+
 - add ~/.cdent/config.yaml and ./.cdent/config.yaml support (CDENT_CONFIG)
-
-+ --emit-header
-+ --emit-trailer
-+ --emit-info
-+ env variable for all command defaults
-
-+ Add Copyright to generator
-+ Add LICENSE file
-+ Get cdent --version working

@@ -5,36 +5,29 @@ user: ingy
 from:
   lang: py
   path: /Users/ingy/src/hello-world/World.py
-module: !Module
-  name: World
+has: !Module
+  name: world
   has:
   - !Comment
-    line: 1
     type: doc
     val: "This is World class :)\n"
   - !Comment
-    line: 2
     type: blank
     val: "\n"
   - !IncludeCDent
-    line: 2
     type: blank
   - !Comment
-    line: 2
     type: blank
     val: "\n"
   - !Class
-    line: 3
     name: World
     has:
     - !Method
-      line: 4
       name: greet
       type: void
       args: []
       has:
       - !Println
-        line: 5
         args:
         - !String
           val: 'Hello, world'

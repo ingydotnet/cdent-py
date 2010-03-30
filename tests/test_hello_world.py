@@ -5,10 +5,10 @@ import cdent.test
 
 class TestHelloWorld(cdent.test.TestCase):
     cmds = [
-        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=py --input=hello-world/World.cd --output=output',
-        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=pm --input=hello-world/World.cd --output=output',
-        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=js --input=hello-world/World.cd --output=output',
-        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=rb --input=hello-world/World.cd --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=py --input=tests/modules/world.cd.yaml --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=pm --input=tests/modules/world.cd.yaml --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=js --input=tests/modules/world.cd.yaml --output=output',
+        'PYTHONPATH=. python bin/cdent --compile --from=yaml --to=rb --input=tests/modules/world.cd.yaml --output=output',
         'cd hello-world; js hello_world.js',
         'cd hello-world; php hello_world.php',
         'cd hello-world; perl6 hello_world.p6',

@@ -160,7 +160,7 @@ class Command():
         self.parser.open(self.input)
         ast = self.parser.parse()
         self.emitter.open(self.output)
-        self.emitter.create_module(ast)
+        self.emitter.emit_ast(ast)
 
     def version(self):
         print "C'Dent version '%s'" % cdent.compiler.version()

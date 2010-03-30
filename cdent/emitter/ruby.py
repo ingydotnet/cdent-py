@@ -7,6 +7,9 @@ from cdent.emitter import Emitter as Base
 class Emitter(Base):
     LANGUAGE_ID = 'rb'
 
+    def emit_includecdent(self, includecdent): 
+        self.writeln("require 'CDent::Run'")
+
     def emit_class(self, class_): 
         name = class_.name
         self.writeln('class %s' % name)
