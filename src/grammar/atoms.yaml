@@ -1,0 +1,25 @@
+---
+# RegExp atoms
+ALL:  /[\s\S]/           # Any unicode character
+WS:   /[\ \t]/           # A space or tab character
+BR:   /\n/               # A newline character
+EOL:  /\r?\n/            # A Unix or DOS line ending
+ANY:  /./                # Any character except newline
+LC:   /[a-z]/            # Lower case ASCII alphabetic character
+UC:   /[A-Z]/            # Upper case ASCII alphabetic character
+AN:   /[A-Za-z0-9]/      # ASCII alphanumeric character
+WC:   /\w/               # ie '[A-Za-z0-9_]' - A "word" character
+NUM:  /[0-9]/            # A numeric digit
+DS:   /\$/               # A dollar sign
+DOT:  /\./               # A period character
+PS:   /#/                # A pound sign
+BS:   /\\/               # A backslash character
+SQ:   /'/                # A single quote character'
+DQ:   /"/                # A double quote character"
+TQ:   /"""/              #" Python triple quote
+LP:   /\(/               # A left parentheses
+RP:   /\)/               # A right parentheses
+COL:  /:/                # A colon
+PLUS: /\+/               # A plus
+DASH: /-/                # A minus
+STAR: /\*/               # A star

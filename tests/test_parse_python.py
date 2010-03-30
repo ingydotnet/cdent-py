@@ -1,19 +1,24 @@
 import cdent.test
 
-from cdent.parser.python import Parser
-from cdent.ast import AST
+import cdent.parser.cdent.yaml
+import cdent.parser.python
 
 class TestPythonParser(cdent.test.TestCase):
-    def setUp(self):
-        self.parser = Parser()
 
     def test_parse_python(self):
-        print 'test_parse_python'
+        parser = cdent.parser.python.Parser()
         input = file('tests/modules/world.cd.py', 'r').read()
-        ast = self.parser.open(input)
-        ast = self.parser.parse()
+        parser.open(input)
+        ast = parser.parse()
 
-        self.assertEqual(ast, isinstance(ast, AST), "Got an AST object")
+        parser = cdent.parser.cdent.yaml.Parser()
+        input = file('tests/modules/world.cd.yaml', 'r').read()
+        parser.open(input)
+        expected = parser.parse()
+            
+        print ">>> %s" % expected
+
+        self.assertEqual(ast, expected, "Got an AST object")
 
 if __name__ == '__main__':
     cdent.test.main()

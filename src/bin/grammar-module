@@ -10,7 +10,6 @@ import sys
 from warnings import warn
 import pprint
 
-
 import yaml
 try:
     from yaml import CLoader as Loader
@@ -28,6 +27,12 @@ class GrammarModule():
             dict.update(yaml.load(file(path)))
         self.grammar = {}
         regexps = {}
+        atoms = yaml.load(file('grammar/atoms.yaml'))
+        for k in atoms:
+            v = atoms[k]
+            if v[0] != '/':
+                raise Exception("bad atom")
+            atoms[k] = v[1:-1]
         for k in dict:
             v = dict[k]
             t = v.__class__.__name__
@@ -37,9 +42,11 @@ class GrammarModule():
                 self.grammar[k] = v
         def f(m):
             n = m.groups()[0]
-            if n not in regexps:
-                raise Exception("'%s' is not defined in the grammar" % n)
-            return regexps[n]
+            if n in atoms:
+                return atoms[n]
+            if n in regexps:
+                return regexps[n]
+            raise Exception("'%s' is not defined in the grammar" % n)
         for k in regexps:
             v = regexps[k]
             while True:
@@ -81,22 +88,6 @@ class GrammarModule():
             return Rule(d)
         else:
             raise Exception("Failed to parse '%s'" % str)
-         
-# 
-# 
-#                 else:
-#                     m = re.match('^(\w+)([\*\+\?])?$', v)
-#                     if m:
-#                         g = m.groups()
-#                         self.grammar[k] = Rule({'_': g[0], 'm': g[1]})
-#                     else:
-#                         self.grammar[k] = v
-#             elif t == 'list':
-#                 self.grammar[k] = All({'_': v})
-#             else:
-#                 raise Exception
-
-
 
     def generate_module(self, lang):
         Lang = lang[0].upper() + lang[1:]
