@@ -11,7 +11,7 @@ class Grammar():
   'Class': All({'_': [Rule({'_': 'ClassSignatureLine'}), Rule({'_': 'ClassBody'})]}),
   'ClassSignatureLine': Re({'_': 'class[\\ \\t]+\\w+\\(\\w+?\\):\\r?\\n'}),
   'Comment': Any({'_': [Rule({'_': 'LineComment'}), Rule({'_': 'BlankLine'})]}),
-  'DocComment': All({'_': [Rule({'_': 'DocCommentBegin'}), Rule({'x': '*', '_': 'DocCommentLine'}), Rule({'_': 'DocCommentEnd'})]}),
+  'DocComment': All({'_': [Rule({'_': 'DocCommentBegin'}), Rule({'_': 'DocCommentLine'}), All({'_': [Not({'_': Rule({'_': 'DocCommentEnd'})}), Rule({'_': 'DocCommentLine'})]}), Rule({'_': 'DocCommentEnd'})]}),
   'DocCommentBegin': Re({'_': '"""\\\\[\\ \\t]*\\r?\\n'}),
   'DocCommentEnd': Re({'_': '"""[\\ \\t]*\\r?\\n'}),
   'DocCommentLine': Re({'_': '(.*\\r?\\n)'}),

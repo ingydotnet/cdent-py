@@ -12,7 +12,7 @@ from cdent.ast import *
 
 import yaml
 def y(o):
-    print yaml.dump(o)
+    print yaml.dump(o, default_flow_style=False)
     return o
 
 def die(s):
@@ -39,58 +39,86 @@ class Parser():
         self.index = 0
 
     def parse(self):
+#         y(self.grammar)
+#         sys.exit()
         if self.stream is None:
             raise Exception("You need to call open() on the parser object")
 
         self.receiver = Receiver()
-        self.match_name('Module')
+        self.match('Module')
 
         return self.receiver.ast
 
-    def match_name(self, name):
-        print "match_name> " + name
+    def match(self, name):
+        print "match> " + name
         rule = getattr(self.grammar, name)
-        return self.match(rule)
+        return self.dispatch(rule)
 
-    def match(self, rule):
+    def dispatch(self, rule):
         type = rule.__class__.__name__
+        print " rule> " + repr(rule)
         if type == 'All':
-            return self.match_all(rule)
+            result = self.match_all(rule)
         elif type == 'Any':
-            return self.match_any(rule)
+            result = self.match_any(rule)
         elif type == 'Re':
-            return self.match_re(rule)
+            result = self.match_re(rule)
         elif type == 'Rule':
-            return self.match_rule(rule)
+            result = self.match_rule(rule)
+        elif type == 'Not':
+            result = self.match_not(rule)
         else:
+            print '>>>' + repr(rule)
             raise Exception("*** Error; type is " + type)
 
+        
+        print "-rule> " + ('pass' if result else 'fail') + type
+        return result
+
     def match_all(self, all):
+        print "  all>"
         for rule in all._:
-            if not self.match(rule):
+            if not self.dispatch(rule):
                 return False
         return True
 
     def match_any(self, all):
         for rule in all._:
-            if self.match(rule):
+            if self.dispatch(rule):
                 return True
         return False
 
     def match_rule(self, rule):
-        return self.match_name(rule._)
+        name = rule._
+        rep = getattr(rule, 'x', '1')
+        count = 0
+        while True:
+            result = self.match(name)
+            if rep == '1': return result
+            if rep == '?': return True
+            if not result:
+                if rep == '+': return (count > 0)
+                if rep == '*': return True
+            count += 1
 
     def match_re(self, regexp):
         pattern = regexp._
-        print "  re: " + pattern
+        print "  re> " + pattern
         m = re.match(pattern, self.stream[self.index:])
         if (m):
-            print "  passed"
+            print "   passed> " + self.current_text()
             self.index += m.end()
             return True
         else:
-            print "  failed"
+            print "   failed> " + self.current_text()
             return False
+
+    def match_not(self, rule):
+        return not self.dispatch(rule._)
+
+    def current_text(self):
+       text = self.stream[self.index:]
+       return repr(text)
 
     def match_fail(self, rule):
         text = self.stream[self.index:].splitlines()[0]

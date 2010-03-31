@@ -15,7 +15,11 @@ Module:
 
 DocComment:
 - DocCommentBegin
-- DocCommentLine*
+- DocCommentLine
+- _:
+  - DocCommentEnd!
+  - DocCommentLine
+  x: '*'
 - DocCommentEnd
 
 Comment: (LineComment|BlankLine)
