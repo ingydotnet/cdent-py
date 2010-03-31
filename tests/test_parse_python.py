@@ -15,10 +15,9 @@ class TestPythonParser(cdent.test.TestCase):
         input = file('tests/modules/world.cd.yaml', 'r').read()
         parser.open(input)
         expected = parser.parse()
+        expected = {}
             
-        print ">>> %s" % expected
-
-        self.assertEqual(ast, expected, "Got an AST object")
+        self.assertEqual(ast, expected)
 
 if __name__ == '__main__':
     cdent.test.main()

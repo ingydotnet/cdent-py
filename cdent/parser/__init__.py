@@ -1,10 +1,12 @@
 """\
 Parser base class for C'Dent
 """
+
 from __future__ import absolute_import
 
 import sys
 import re
+import traceback
 
 from cdent.ast import *
 
@@ -13,9 +15,16 @@ def y(o):
     print yaml.dump(o)
     return o
 
+def die(s):
+    raise Exception(s)
+
+def warn(s):
+    print 'warning: %s' % s
+    return s
+
 class Parser():
     def __init__(self):
-        self.stream = ''
+        self.stream = None
 
     def open(self, input):
         if isinstance(input, str):
@@ -27,21 +36,23 @@ class Parser():
             self.stream = input.read()
         else:
             raise Exception("input to open is invalid")
+        self.index = 0
 
     def parse(self):
-        if self.stream.rfind('\n') <= 0:
-            raise Exception("no input to parse")
-        self.index = 0
-        self.strlen = len(self.stream)
-        self.ast = AST()
-        start_rule = getattr(self.grammar, 'Module')
-        self.match(start_rule)
-        y(self.ast)
+        if self.stream is None:
+            raise Exception("You need to call open() on the parser object")
+
+        self.receiver = Receiver()
+        self.match_name('Module')
+
+        return self.receiver.ast
+
+    def match_name(self, name):
+        print "match_name> " + name
+        rule = getattr(self.grammar, name)
+        return self.match(rule)
 
     def match(self, rule):
-        text = self.stream[self.index:].splitlines()[0]
-        print "match> %s >%s<" % (repr(rule), text)
-
         type = rule.__class__.__name__
         if type == 'All':
             return self.match_all(rule)
@@ -67,18 +78,18 @@ class Parser():
         return False
 
     def match_rule(self, rule):
-        return self.match(getattr(self.grammar, rule._))
+        return self.match_name(rule._)
 
     def match_re(self, regexp):
-        text = self.stream[self.index:].splitlines()[0]
         pattern = regexp._
+        print "  re: " + pattern
         m = re.match(pattern, self.stream[self.index:])
         if (m):
-            print "Re(%s) match passed>%s" % (repr(pattern), text)
+            print "  passed"
             self.index += m.end()
             return True
         else:
-            print "Re(%s) match failed>%s" % (repr(pattern), repr(self.stream))
+            print "  failed"
             return False
 
     def match_fail(self, rule):
@@ -88,3 +99,11 @@ Failed to match rule '%s'
 against text '%s'
 """ % (rule, text)
         raise Exception(error)
+
+
+class Receiver():
+    def __init__(self):
+        self.ast = AST()
+        self.cur = self.ast
+
+
