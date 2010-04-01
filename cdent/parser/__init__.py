@@ -18,13 +18,26 @@ def y(o):
 def die(s):
     raise Exception(s)
 
-def warn(s):
-    print 'warning: %s' % s
-    return s
+globals()['ind'] = ''
+def reset():
+    globals()['ind'] = ''
+def indent():
+    globals()['ind'] = globals()['ind'] + ' '
+def undent():
+    globals()['ind'] = globals()['ind'][0:-1]
+def log(s):
+    s = ind + s
+    if len(s) > 175:
+        s = s[0:175]
+    print s
 
 class Parser():
     def __init__(self):
         self.stream = None
+        indents = []
+        self.index = 0
+#         y(self.grammar)
+#         sys.exit()
 
     def open(self, input):
         if isinstance(input, str):
@@ -36,27 +49,26 @@ class Parser():
             self.stream = input.read()
         else:
             raise Exception("input to open is invalid")
-        self.index = 0
 
     def parse(self):
-#         y(self.grammar)
-#         sys.exit()
         if self.stream is None:
             raise Exception("You need to call open() on the parser object")
 
         self.receiver = Receiver()
+        reset()
         self.match('Module')
 
         return self.receiver.ast
 
     def match(self, name):
-        print "match> " + name
         rule = getattr(self.grammar, name)
-        return self.dispatch(rule)
+        result = self.dispatch(rule)
+        return result
 
     def dispatch(self, rule):
         type = rule.__class__.__name__
-        print " rule> " + repr(rule)
+        # log("dispatch(%s)" % repr(rule))
+        indent()
         if type == 'All':
             result = self.match_all(rule)
         elif type == 'Any':
@@ -67,28 +79,33 @@ class Parser():
             result = self.match_rule(rule)
         elif type == 'Not':
             result = self.match_not(rule)
+        elif type == 'Indent':
+            result = self.match_indent(rule)
+        elif type == 'Undent':
+            result = self.match_undent(rule)
         else:
-            print '>>>' + repr(rule)
+            log('>>>' + repr(rule))
             raise Exception("*** Error; type is " + type)
-
-        
-        print "-rule> " + ('pass' if result else 'fail') + type
+        log(('passed ' if result else 'failed ') + type)
+        undent()
         return result
 
     def match_all(self, all):
-        print "  all>"
+        log("match_all(%s)" % all)
         for rule in all._:
             if not self.dispatch(rule):
                 return False
         return True
 
-    def match_any(self, all):
-        for rule in all._:
+    def match_any(self, any):
+        log("match_any(%s)" % any)
+        for rule in any._:
             if self.dispatch(rule):
                 return True
         return False
 
     def match_rule(self, rule):
+        log("match_rule(%s)" % rule)
         name = rule._
         rep = getattr(rule, 'x', '1')
         count = 0
@@ -103,30 +120,28 @@ class Parser():
 
     def match_re(self, regexp):
         pattern = regexp._
-        print "  re> " + pattern
+        log("match_re(%s)" % pattern)
+        log("        >%s" % self.current_text())
         m = re.match(pattern, self.stream[self.index:])
         if (m):
-            print "   passed> " + self.current_text()
             self.index += m.end()
             return True
         else:
-            print "   failed> " + self.current_text()
             return False
 
     def match_not(self, rule):
-        return not self.dispatch(rule._)
+        log("match_not(%s)" % rule)
+        index = self.index
+        result = not self.dispatch(rule._)
+        self.index = index
+        return result
+
+    def match_indent(self, rule):
+        return True
 
     def current_text(self):
        text = self.stream[self.index:]
        return repr(text)
-
-    def match_fail(self, rule):
-        text = self.stream[self.index:].splitlines()[0]
-        error = """\
-Failed to match rule '%s'
-against text '%s'
-""" % (rule, text)
-        raise Exception(error)
 
 
 class Receiver():

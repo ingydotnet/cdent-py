@@ -15,7 +15,6 @@ Module:
 
 DocComment:
 - DocCommentBegin
-- DocCommentLine
 - _:
   - DocCommentEnd!
   - DocCommentLine

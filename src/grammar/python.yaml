@@ -7,9 +7,25 @@ DocCommentEnd: /$TQ$WS*$EOL/
 IncludeCDent: /from cdent import $STAR/
 
 Class:
-- ClassSignatureLine
+- ClassSignature
 - ClassBody
 
-ClassSignatureLine: /class$WS+$Id$LP$Id?$RP$COL$EOL/
+ClassSignature: /class$WS+$Id$LP(?:$Id)?$RP$COL$EOL/
+
+ClassBody:
+- indent
+- (Method|Comment)*
+- undent
+
+Method:
+- MethodSignature
+- MethodBody
+
+MethodSignature: /^def$WS+$Id$LP(?:$Id)?$RP$COL$EOL/
+
+MethodBody:
+- indent
+- Statement+
+- undent
 
 Id: /$WC+/

@@ -7,5 +7,7 @@ from cdent.parser import Parser as Base
 from cdent.parser.python.grammar import Grammar
 
 class Parser(Base):
+    grammar = Grammar()
+
     def __init__(self):
-        self.grammar = Grammar()
+        Base.__init__(self)
