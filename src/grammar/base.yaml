@@ -11,7 +11,7 @@ Module:
 - Class
 - (Class|Comment)*
 - Ending
-- Comments*
+- Comment*
 
 DocComment:
 - DocCommentBegin

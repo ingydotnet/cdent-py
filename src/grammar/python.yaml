@@ -28,4 +28,8 @@ MethodBody:
 - Statement+
 - undent
 
+Statement: (PrintLn|Comment)
+
+PrintLn: /print$WS+($ANY+)$EOL/
+
 Id: /$WC+/
