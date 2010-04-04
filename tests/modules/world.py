@@ -1,10 +1,7 @@
-# C'Dent generated Python module.
-# C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved.
+# *** DO NOT EDIT ***  This is a C'Dent generated Python module.
 """\
 This is World class :)
 """
-
-from cdent.run import *
 
 class World():
     def greet(self):

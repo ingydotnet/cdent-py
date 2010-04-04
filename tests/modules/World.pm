@@ -1,10 +1,7 @@
-# C'Dent generated Perl module.
-# C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved.
+# *** DO NOT EDIT ***  This is a C'Dent generated Perl module.
 ###
 # This is World class :)
 ###
-
-use CDent::Run;
 
 package World;
 use Moose;
