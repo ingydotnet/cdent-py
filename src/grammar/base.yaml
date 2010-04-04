@@ -6,7 +6,7 @@ BlankLine: /$WS*$EOL/
 Module:
 - DocComment?
 - Comment*
-- IncludeCDent
+- IncludeCDent?
 - Comment*
 - Class
 - (Class|Comment)*

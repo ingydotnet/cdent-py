@@ -24,7 +24,7 @@ class Grammar():
   'Method': All({'_': [Rule({'_': 'MethodSignature'}), Rule({'_': 'MethodBody'})]}),
   'MethodBody': All({'_': [Indent({}), Rule({'x': '+', '_': 'Statement'}), Undent({})]}),
   'MethodSignature': Re({'_': '^def[\\ \\t]+\\w+\\((?:\\w+)?\\):\\r?\\n'}),
-  'Module': All({'_': [Rule({'x': '?', '_': 'DocComment'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'IncludeCDent'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Class'}), Any({'x': '*', '_': [Rule({'_': 'Class'}), Rule({'_': 'Comment'})]}), Rule({'_': 'Ending'}), Rule({'x': '*', '_': 'Comment'})]}),
+  'Module': All({'_': [Rule({'x': '?', '_': 'DocComment'}), Rule({'x': '*', '_': 'Comment'}), Rule({'x': '?', '_': 'IncludeCDent'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Class'}), Any({'x': '*', '_': [Rule({'_': 'Class'}), Rule({'_': 'Comment'})]}), Rule({'_': 'Ending'}), Rule({'x': '*', '_': 'Comment'})]}),
   'PrintLn': Re({'_': 'print[\\ \\t]+(.+)\\r?\\n'}),
   'Statement': Any({'_': [Rule({'_': 'PrintLn'}), Rule({'_': 'Comment'})]}),
   'line_comment_start': Re({'_': '#'})}

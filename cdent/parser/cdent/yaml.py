@@ -11,6 +11,7 @@ except ImportError:
 
 import cdent.ast
 from cdent.parser import Parser as Base
+from cdent.parser import ParseError
 
 class Parser(Base):
     def parse(self):

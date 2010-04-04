@@ -16,7 +16,7 @@ class Emitter():
 
     def __init__(self):
         self.emit_header = True
-        self.emit_trailer = True
+        self.emit_trailer = False
         self.indentation = ''
 
     def open(self, output):
@@ -95,14 +95,14 @@ class Emitter():
 
     def cdent_header(self, ast):
         header = (
-            "C'Dent generated %s module." %
+            "*** DO NOT EDIT ***  This is a C'Dent generated %s module." %
             cdent.compiler.language(self.LANGUAGE_ID)
         )
         if self.emit_trailer:
             header += " See trailer at end of file for details."
         self.write_line_comment(header)
-        header = "C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved."
-        self.write_line_comment(header)
+#         header = "C'Dent is Copyright (c) 2010, Ingy dot Net. All rights reserved."
+#         self.write_line_comment(header)
 #         header = "12345678901234567890123456789012345678901234567890123456789012345678901234567890"
 #         self.writeln(header)
 

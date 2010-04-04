@@ -1,5 +1,4 @@
 - Create AST from parse events
-- Add ParseError class (no stack trace)
 
 - cdent.parser.cdent.xml
 - cdent.emitter.cdent.xml
