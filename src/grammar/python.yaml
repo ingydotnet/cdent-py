@@ -14,6 +14,8 @@ ClassSignature: /class$WS+$Id$LP(?:$Id)?$RP$COL$EOL/
 
 ClassBody:
 - indent
+- Comment*
+- Method
 - (Method|Comment)*
 - undent
 

@@ -4,7 +4,7 @@ BlankLine: /$WS*$EOL/
 
 # Module parsing grammar
 Module:
-- DocComment
+- DocComment?
 - Comment*
 - IncludeCDent
 - Comment*

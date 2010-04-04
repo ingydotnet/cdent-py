@@ -10,7 +10,6 @@ class Base():
 
 class All(Base): pass
 class Any(Base): pass
-class Not(Base): pass
 class Re(Base): pass
 class Rule(Base): pass
 class Indent(Base): pass

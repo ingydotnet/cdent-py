@@ -9,10 +9,10 @@ class Grammar():
         self.__dict__.update(
 { 'BlankLine': Re({'_': '[\\ \\t]*\\r?\\n'}),
   'Class': All({'_': [Rule({'_': 'ClassSignature'}), Rule({'_': 'ClassBody'})]}),
-  'ClassBody': All({'_': [Indent({}), Any({'x': '*', '_': [Rule({'_': 'Method'}), Rule({'_': 'Comment'})]}), Undent({})]}),
+  'ClassBody': All({'_': [Indent({}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Method'}), Any({'x': '*', '_': [Rule({'_': 'Method'}), Rule({'_': 'Comment'})]}), Undent({})]}),
   'ClassSignature': Re({'_': 'class[\\ \\t]+\\w+\\((?:\\w+)?\\):\\r?\\n'}),
   'Comment': Any({'_': [Rule({'_': 'LineComment'}), Rule({'_': 'BlankLine'})]}),
-  'DocComment': All({'_': [Rule({'_': 'DocCommentBegin'}), All({'x': '*', '_': [Not({'_': Rule({'_': 'DocCommentEnd'})}), Rule({'_': 'DocCommentLine'})]}), Rule({'_': 'DocCommentEnd'})]}),
+  'DocComment': All({'_': [Rule({'_': 'DocCommentBegin'}), All({'x': '*', '_': [Rule({'!': True, '_': 'DocCommentEnd'}), Rule({'_': 'DocCommentLine'})]}), Rule({'_': 'DocCommentEnd'})]}),
   'DocCommentBegin': Re({'_': '"""\\\\[\\ \\t]*\\r?\\n'}),
   'DocCommentEnd': Re({'_': '"""[\\ \\t]*\\r?\\n'}),
   'DocCommentLine': Re({'_': '(.*\\r?\\n)'}),
@@ -24,7 +24,7 @@ class Grammar():
   'Method': All({'_': [Rule({'_': 'MethodSignature'}), Rule({'_': 'MethodBody'})]}),
   'MethodBody': All({'_': [Indent({}), Rule({'x': '+', '_': 'Statement'}), Undent({})]}),
   'MethodSignature': Re({'_': '^def[\\ \\t]+\\w+\\((?:\\w+)?\\):\\r?\\n'}),
-  'Module': All({'_': [Rule({'_': 'DocComment'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'IncludeCDent'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Class'}), Any({'x': '*', '_': [Rule({'_': 'Class'}), Rule({'_': 'Comment'})]}), Rule({'_': 'Ending'}), Rule({'x': '*', '_': 'Comment'})]}),
+  'Module': All({'_': [Rule({'x': '?', '_': 'DocComment'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'IncludeCDent'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Class'}), Any({'x': '*', '_': [Rule({'_': 'Class'}), Rule({'_': 'Comment'})]}), Rule({'_': 'Ending'}), Rule({'x': '*', '_': 'Comment'})]}),
   'PrintLn': Re({'_': 'print[\\ \\t]+(.+)\\r?\\n'}),
   'Statement': Any({'_': [Rule({'_': 'PrintLn'}), Rule({'_': 'Comment'})]}),
   'line_comment_start': Re({'_': '#'})}

@@ -10,37 +10,18 @@ import traceback
 
 from cdent.ast import *
 
-import yaml
-def y(o):
-    print yaml.dump(o, default_flow_style=False)
-    return o
-
-def die(s):
-    raise Exception(s)
-
-globals()['ind'] = ''
-def reset():
-    globals()['ind'] = ''
-def indent():
-    globals()['ind'] = globals()['ind'] + ' '
-def undent():
-    globals()['ind'] = globals()['ind'][0:-1]
-def log(s):
-    return
-    s = ind + s
-    if len(s) > 175:
-        s = s[0:175]
-    print s
-
 class Parser():
     def __init__(self):
+#         y(self.grammar)
+#         sys.exit()
         self.stream = None
         self.index = 0
         self.indents = []
         self.undents = []
+        self.rules = []
         self.indent_please = False
-#         y(self.grammar)
-#         sys.exit()
+        self.failure_is_ok = 0
+        self.log = Log()
 
     def open(self, input):
         if isinstance(input, str):
@@ -57,22 +38,22 @@ class Parser():
         if self.stream is None:
             raise Exception("You need to call open() on the parser object")
 
-        self.receiver = Receiver()
-        reset()
-        if not self.match('Module'):
+        self.receiver = Receiver(parser=self)
+
+        if not self.match(name='Module'):
             raise Exception('Parse failed')
 
         return self.receiver.ast
 
-    def match(self, name):
-        rule = getattr(self.grammar, name)
-        result = self.dispatch(rule)
-        return result
-
-    def dispatch(self, rule):
+    def match(self, name=None, rule=None):
+        if name:
+            self.rules.append(name)
+            rule = getattr(self.grammar, name)
+        elif not rule:
+            raise Exception("match() requires name or rule")
         type = rule.__class__.__name__
-        # log("dispatch(%s)" % repr(rule))
-        indent()
+        self.log.indent()
+
         if type == 'All':
             result = self.match_all(rule)
         elif type == 'Any':
@@ -81,8 +62,6 @@ class Parser():
             result = self.match_re(rule)
         elif type == 'Rule':
             result = self.match_rule(rule)
-        elif type == 'Not':
-            result = self.match_not(rule)
         elif type == 'Indent':
             result = self.request_indent(rule)
         elif type == 'Undent':
@@ -90,48 +69,59 @@ class Parser():
         else:
             log('>>>' + repr(rule))
             raise Exception("*** Error; type is " + type)
-        log(('passed ' if result else 'failed ') + type)
-        undent()
+
+        if (result is False and
+            not self.failure_is_ok and
+            type == 'Rule' and
+            not getattr(rule, '!', False)
+        ):
+            self.report_failure()
+
+        self.log.write(('passed ' if result else 'failed ') + type)
+        self.log.undent()
+
+        if name:
+            self.rules.pop()
+
         return result
 
-    # TODO Make sure all rep indicators work
     def match_all(self, all):
-        log("match_all(%s)" % all)
-        for rule in all._:
-            if not self.dispatch(rule):
-                return False
-        return True
-
-    # TODO Make sure all rep indicators work
-    def match_any(self, any):
-        log("match_any(%s)" % any)
-        for rule in any._:
-            if self.dispatch(rule):
-                return True
-        rep = getattr(any, 'x', '1')
-        if rep == '1':
-            return False
-        if rep == '*':
+        self.log.write("match_all(%s)" % all)
+        def match():
+            for rule in all._:
+                if not self.match(rule=rule):
+                    return False
             return True
+        return self.repeat_match(match, all)
+
+    def match_any(self, any):
+        self.log.write("match_any(%s)" % any)
+        self.failure_is_ok += 1
+        def match():
+            for rule in any._:
+                if self.match(rule=rule):
+                    return True
+            return False
+        result = self.repeat_match(match, any)
+        self.failure_is_ok -= 1
+        return result
 
     def match_rule(self, rule):
-        log("match_rule(%s)" % rule)
-        name = rule._
-        rep = getattr(rule, 'x', '1')
-        count = 0
-        while True:
-            result = self.match(name)
-            if rep == '1': return result
-            if rep == '?': return True
-            if not result:
-                if rep == '+': return (count > 0)
-                if rep == '*': return True
-            count += 1
+        self.log.write("match_rule(%s)" % rule)
+        not_ = getattr(rule, '!', False)
+        index = self.index
+        def match():
+            result = self.match(name=rule._)
+            if not_:
+                result ^= True
+                self.index = index
+            return result
+        return self.repeat_match(match, rule)
 
     def match_re(self, regexp):
         pattern = regexp._
-        log("match_re(%s)" % pattern)
-        log("        >%s" % self.current_text())
+        self.log.write("match_re(%s)" % pattern)
+        self.log.write(">>>>>>>>%s" % self.current_text())
         if not self.match_indent():
             return False
         m = re.match(pattern, self.stream[self.index:])
@@ -141,12 +131,22 @@ class Parser():
         else:
             return False
 
-    def match_not(self, rule):
-        log("match_not(%s)" % rule)
-        index = self.index
-        result = not self.dispatch(rule._)
-        self.index = index
-        return result
+    def repeat_match(self, match, rule):
+        rep = getattr(rule, 'x', '1')
+        assert rep in '?1*+'
+        if rep in '?*': self.failure_is_ok += 1
+        result = match()
+        if rep in '?*': self.failure_is_ok -= 1
+        if rep == '1': return result
+        if rep == '?': return True
+        if result is False:
+            if rep == '+': return False
+            if rep == '*': return True
+        self.failure_is_ok += 1
+        while result is True:
+            result = match()
+        self.failure_is_ok -= 1
+        return True
 
     def request_indent(self, rule):
         self.indent_please = True
@@ -196,10 +196,58 @@ class Parser():
        text = self.stream[self.index:]
        return repr(text)
 
+    def report_failure(self):
+        msg = """\
+Parse error at line: %(line)s.
+Failed to match: %(stack)s
+Context:
+%(context)s
+...
+"""
+        index = self.index
+        stream = self.stream
+
+        line = stream[0:index].count('\n') + 1
+        stack = ">".join(self.rules)
+
+        if index > 0 and stream[index - 1] != '\n':
+            index = stream.rfind("\n", 0, index) + 1
+        lines = stream[index:].split("\n") if index < len(stream) else []
+        lines.pop()
+        if len(lines) >= 3:
+            lines = lines[0:3]
+        else:
+            lines.append('---EOF---')
+        context = "\n".join(lines)
+
+        raise Exception(msg % locals())
+
 
 class Receiver():
-    def __init__(self):
+    def __init__(self, parser=None):
         self.ast = AST()
-        self.cur = self.ast
+        self.ptr = self.ast
+        self.parser = parser
 
 
+class Log():
+    ENABLED = False
+    #ENABLED = True
+    MAXLEN = 175
+    def __init__(self):
+        self.ind = -1
+    def indent(self):
+        self.ind += 1
+    def undent(self):
+        self.ind -= 1
+    def write(self, str):
+        if not self.ENABLED: return
+        str = ' ' * self.ind + str
+        if len(str) > self.MAXLEN:
+            str = str[0:self.MAXLEN]
+        print str
+
+def y(o):
+    import yaml
+    print yaml.dump(o, default_flow_style=False)
+    return o

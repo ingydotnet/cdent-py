@@ -101,8 +101,9 @@ class GrammarModule():
             str = str[0:-1]
         if str[-1] == '!':
             str = str[0:-1]
-            d['_'] = self.parse(str)
-            return Not(d)
+            rule = self.parse(str)
+            rule.__dict__['!'] = True
+            return rule
         elif str[0] == '(':
             str = str[1:-1]
             list = []
