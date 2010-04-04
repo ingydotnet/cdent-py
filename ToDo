@@ -1,5 +1,12 @@
+- Create AST from parse events
+- Add ParseError class (no stack trace)
+
 - cdent.parser.cdent.xml
 - cdent.emitter.cdent.xml
+- cdent.parser.cdent.json
+- cdent.emitter.cdent.json
 - cdent.emitter.cdent.yaml
 
-- add ~/.cdent/config.yaml and ./.cdent/config.yaml support (CDENT_CONFIG)
+- Create a DTD for a C'Dent XML file
+
+- add ~/.cdent/config.yaml and ./.cdent/config.yaml support (CDENT_CONFIG_DIR CDENT_CONFIG_FILE)
