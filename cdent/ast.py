@@ -6,7 +6,7 @@ import yaml
 
 class Base():
     def __repr__(self):
-        return yaml.dump(self)
+        return yaml.dump(self, default_flow_style=False)
 
 class Container(Base):
     def __init__(self, has=None):

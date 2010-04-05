@@ -84,7 +84,7 @@ class Command():
             self.from_ = value
         optparser.add_option(
             "--from", type="choice",
-            choices=['cd.json', 'cd.xml', 'cd.yaml', 'js', 'json', 'py'],
+            choices=['cd.json', 'cd.xml', 'cd.yaml', 'cd.js', 'cd.py'],
             action="callback", callback=cb_from,
             help="input format -- autodetected from input file name"
         )

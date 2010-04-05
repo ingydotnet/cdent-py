@@ -35,7 +35,7 @@ class TestPythonParser(cdent.test.TestCase):
         emitter.open(output)
         emitter.emit_ast(self.ast)
         got = output.getvalue()
-        expected = file('tests/modules/world.pm').read()
+        expected = file('tests/modules/World.pm').read()
 
         self.assertTextEquals(got, expected, 'Emit world.pm')
 

@@ -1,6 +1,7 @@
 """\
 C'Dent parser for already compiled AST
 """
+
 from __future__ import absolute_import
 
 from yaml import load

@@ -2,6 +2,8 @@
 JavaScript code emitter for C'Dent
 """
 
+from __future__ import absolute_import
+
 from cdent.emitter import Emitter as Base
 
 class Emitter(Base):

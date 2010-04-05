@@ -34,7 +34,9 @@ class Receiver():
             method()
 
     def start_module(self):
-        self.ptr.has.append(Module())
+        module = Module()
+        self.ptr.has.append(module)
+        self.ptr = module
 
 
 class Parser():

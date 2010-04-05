@@ -132,3 +132,8 @@ input:
   lang: %(input_lang)s
 cdent: %(cdent_version)s
 """
+
+def y(o):
+    import yaml
+    print yaml.dump(o, default_flow_style=False)
+    return o
