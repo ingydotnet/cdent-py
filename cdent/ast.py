@@ -16,8 +16,8 @@ class AST(Container): pass
 class Module(Container): pass
 class Comment(Base): pass
 class IncludeCDent(Base): pass
-class Class(Base): pass
-class Method(Base): pass
+class Class(Container): pass
+class Method(Container): pass
 class Println(Base): pass
 class Return(Base): pass
 class String(Base): pass

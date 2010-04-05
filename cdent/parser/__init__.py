@@ -35,8 +35,21 @@ class Receiver():
 
     def start_module(self):
         module = Module()
+        module.name = 'World'
         self.ptr.has.append(module)
         self.ptr = module
+
+    def start_class(self):
+        class_ = Class()
+        class_.name = 'World'
+        self.ptr.has.append(class_)
+        self.ptr = class_
+
+    def start_method(self):
+        method = Method()
+        method.name = 'greet'
+        self.ptr.has.append(method)
+        self.ptr = method
 
 
 class Parser():

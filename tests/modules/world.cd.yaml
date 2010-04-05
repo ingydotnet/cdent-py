@@ -5,7 +5,8 @@ user: ingy
 from:
   lang: py
   path: /Users/ingy/src/hello-world/World.py
-has: !Module
+has:
+- !Module
   name: world
   has:
   - !Comment

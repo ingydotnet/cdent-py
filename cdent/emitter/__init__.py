@@ -73,7 +73,8 @@ class Emitter():
     def emit_ast(self, ast):
         if self.emit_header:
             self.cdent_header(ast)
-        self.dispatch(ast.has)
+        for node in ast.has:
+            self.dispatch(node)
         if self.emit_trailer:
             self.cdent_trailer(ast)
 
