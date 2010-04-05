@@ -1,6 +1,7 @@
 """\
 Code emitter base class for C'Dent
 """
+from __future__ import absolute_import
 
 import sys
 import StringIO

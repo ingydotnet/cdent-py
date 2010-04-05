@@ -18,7 +18,7 @@ id_to_language = {
 }
 
 id_to_class = {
-    'yaml': 'cdent.yaml',
+    'cd.yaml': 'cdent.yaml',
     'xml':  'cdent.xml',
     'cpp':  'cpp',
     'java': 'java',

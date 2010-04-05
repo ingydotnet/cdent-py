@@ -6,9 +6,35 @@ from __future__ import absolute_import
 
 import sys
 import re
-import traceback
 
 from cdent.ast import *
+
+
+class Receiver():
+    def __init__(self, parser=None):
+        self.ast = AST()
+        self.ptr = self.ast
+        self.parser = parser
+
+    def start(self, name):
+        method = getattr(self, 'start_' + name.lower(), None)
+        if method:
+            method()
+
+    def finish(self, name, result):
+        method = (
+            getattr(self, 'pass_' + name.lower(), None)
+            if result else
+            getattr(self, 'fail_' + name.lower(), None)
+        )
+        if method:
+            method()
+        method = getattr(self, 'finish_' + name.lower(), None)
+        if method:
+            method()
+
+    def start_module(self):
+        self.ptr.has.append(Module())
 
 
 class Parser():
@@ -43,19 +69,23 @@ class Parser():
         self.receiver = Receiver(parser=self)
 
         rule = self.get_rule('Module')
-        self.match(rule)
+        result = self.match(rule)
+        if not result:
+            raise ParseError(self, msg="Failed to parse Module.")
         if self.index != len(self.stream):
-            raise ParseError(self, msg="Failed to parse entire stream")
-        self.pop_rule()
+            raise ParseError(self, msg="Failed to parse entire stream.")
+        self.pop_rule(result)
 
         return self.receiver.ast
 
     def get_rule(self, name):
         self.rules.append(name)
+        self.receiver.start(name)
         return getattr(self.grammar, name)
 
-    def pop_rule(self):
-        self.rules.pop()
+    def pop_rule(self, result):
+        name = self.rules.pop()
+        self.receiver.finish(name, result)
 
     def match(self, rule):
         self.log.indent()
@@ -117,7 +147,7 @@ class Parser():
         result = self.repeat_match(match, rule)
         if not (result or self.failure_is_ok or getattr(rule, '!', False)):
             raise ParseError(self, msg="Failed to match: %(stack)s")
-        self.pop_rule()
+        self.pop_rule(result)
         return result
 
 
@@ -198,13 +228,6 @@ class Parser():
     def current_text(self):
        text = self.stream[self.index:]
        return repr(text)
-
-class Receiver():
-    def __init__(self, parser=None):
-        self.ast = AST()
-        self.ptr = self.ast
-        self.parser = parser
-
 
 class ParseError(Exception):
     def __init__(self, parser, msg=None):

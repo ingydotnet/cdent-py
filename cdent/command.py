@@ -49,7 +49,7 @@ class Command():
             if not os.path.exists(value):
                 raise OptionError(value + ' file does not exist', opt)
             self.in_ = file(value, 'r')
-            m = re.match(r'.*\.cd\.(\w+)$', value)
+            m = re.match(r'.*?\.((?:\cd?\.)?\w+)$', value)
             if m:
                 optparser.rargs.append('--from=' + m.groups()[0])
         optparser.add_option(
@@ -61,7 +61,7 @@ class Command():
         # --out=FILE
         def cb_out(option, opt, value, oparser):
             self.out = file(value, 'w')
-            m = re.match(r'.*\.((?:\cd?\.)?\w+)$', value)
+            m = re.match(r'.*?\.((?:\cd?\.)?\w+)$', value)
             if m:
                 optparser.rargs.append('--to=' + m.groups()[0])
         optparser.add_option(
@@ -84,7 +84,7 @@ class Command():
             self.from_ = value
         optparser.add_option(
             "--from", type="choice",
-            choices=['js', 'json', 'py', 'xml', 'yaml'],
+            choices=['cd.json', 'cd.xml', 'cd.yaml', 'js', 'json', 'py'],
             action="callback", callback=cb_from,
             help="input format -- autodetected from input file name"
         )
