@@ -34,6 +34,57 @@ C'Dent is a programming language that:
    typing is required to generate equivalent code in the various
    emitted port languages.
 
+INSTALLATION
+------------
+
+Currently the best way to install C'Dent is to get the source code and install
+it like so::
+
+    > git clone git://github.com/ingydotnet/cdent.git
+    > cd cdent
+    > sudo setup.py install
+
+USAGE
+-----
+
+After you install C'Dent, you will have a `cdent` compiler in your Unix path.
+Try running this command::
+
+    cdent --help
+
+You'll need a program written in C'Dent. There are some in your C'Dent
+repository clone. One example is `tests/modules/world.cd.py` which looks like
+this::
+
+    """\
+    This is World class :)
+    """
+
+    class World():
+        def greet(self):
+            print "Hello, world"
+
+You can compile to Ruby with this command::
+
+    cdent --compile --in=tests/modules/world.cd.py --to=rb
+
+Which produces::
+
+    # *** DO NOT EDIT ***  This is a C'Dent generated Ruby module.
+    ###
+    # This is World class :)
+    ###
+
+    class World
+        def greet
+            puts("Hello, world")
+        end
+    end
+
+You can compile it to many other languages by changing the value of `--to=`.
+
+COPYRIGHT
+---------
 
 C'Dent is Copyright (c) 2010, Ingy dot Net
 
