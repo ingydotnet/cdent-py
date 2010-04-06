@@ -36,6 +36,10 @@ class Test(Command):
 
 
 if __name__ == '__main__':
+    packages = []
+    for t in os.walk('cdent'):
+        packages.append(t[0].replace('/', '.'))
+
     setup(
         name='cdent',
         version=cdent.__version__,
@@ -80,7 +84,7 @@ if __name__ == '__main__':
         license='Simplified BSD License',
         url='http://www.cdent.org/',
 
-        packages=['cdent', 'cdent.parser', 'cdent.emitter'],
+        packages=packages,
         scripts=['bin/cdent'],
 
         cmdclass={'test': Test},
