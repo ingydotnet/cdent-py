@@ -4,20 +4,30 @@ Abstact Syntax Tree classes for C'Dent
 
 import yaml
 
-class Base():
+class ASTBase():
     def __repr__(self):
         return yaml.dump(self, default_flow_style=False)
 
-class Container(Base):
+class ASTContainer(ASTBase):
     def __init__(self, has=None):
         self.has = has if has else []
 
-class AST(Container): pass
-class Module(Container): pass
-class Comment(Base): pass
-class IncludeCDent(Base): pass
-class Class(Container): pass
-class Method(Container): pass
-class Println(Base): pass
-class Return(Base): pass
-class String(Base): pass
+class AST(ASTContainer):
+    yaml_tag = '!AST'
+class Module(ASTContainer):
+    yaml_tag = '!Module'
+class Comment(ASTBase):
+    yaml_tag = '!Comment'
+class IncludeCDent(ASTBase):
+    yaml_tag = '!IncludeCDent'
+class Class(ASTContainer):
+    yaml_tag = '!Class'
+class Method(ASTContainer):
+    yaml_tag = '!Method'
+class Println(ASTBase):
+    yaml_tag = '!Println'
+class Return(ASTBase):
+    yaml_tag = '!Return'
+class String(ASTBase):
+    yaml_tag = '!String'
+
