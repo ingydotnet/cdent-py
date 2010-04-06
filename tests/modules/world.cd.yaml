@@ -27,5 +27,3 @@ has:
         args:
         - !String
           val: 'Hello, world'
-      - !Return
-        value: ~

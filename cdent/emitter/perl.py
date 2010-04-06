@@ -1,5 +1,5 @@
 """\
-JavaScript code emitter for C'Dent
+Perl code emitter for C'Dent
 """
 
 from __future__ import absolute_import

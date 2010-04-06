@@ -10,7 +10,7 @@ Class:
 - ClassSignature
 - ClassBody
 
-ClassSignature: /class$WS+$Id$LP(?:$Id)?$RP$COL$EOL/
+ClassSignature: /class$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
 ClassBody:
 - indent
@@ -23,7 +23,7 @@ Method:
 - MethodSignature
 - MethodBody
 
-MethodSignature: /^def$WS+$Id$LP(?:$Id)?$RP$COL$EOL/
+MethodSignature: /^def$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
 MethodBody:
 - indent

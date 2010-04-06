@@ -1,9 +1,7 @@
 """\
-Foo module
+This is World class :)
 """
 
-from cdent import *
-
-class Foo():
+class World():
     def greet(self):
         print "Hello, world"

@@ -10,18 +10,21 @@ import re
 from cdent.ast import *
 
 
+#-----------------------------------------------------------------------------#
 class Receiver():
     def __init__(self, parser=None):
-        self.ast = AST()
-        self.ptr = self.ast
         self.parser = parser
+        self.ast = AST()
+        self.container = self.ast
 
     def start(self, name):
+#         print 'start_%s' % name.lower()
         method = getattr(self, 'start_' + name.lower(), None)
         if method:
             method()
 
     def finish(self, name, result):
+#         if result: print 'pass_%s' % name.lower()
         method = (
             getattr(self, 'pass_' + name.lower(), None)
             if result else
@@ -33,25 +36,53 @@ class Receiver():
         if method:
             method()
 
+    def match_text(self, num):
+        return self.parser.groups[num]
+
     def start_module(self):
-        module = Module()
-        module.name = 'World'
-        self.ptr.has.append(module)
-        self.ptr = module
+        module = self.module = Module()
+        module.name = 'Mmmmm'
+        self.ast.has.append(module)
+        self.container = module
 
-    def start_class(self):
-        class_ = Class()
-        class_.name = 'World'
-        self.ptr.has.append(class_)
-        self.ptr = class_
+    def pass_doccommentbegin(self):
+        self.comment = Comment()
+        self.comment.type = 'doc'
+        self.comment.val = ''
 
-    def start_method(self):
-        method = Method()
-        method.name = 'greet'
-        self.ptr.has.append(method)
-        self.ptr = method
+    def pass_doccommentline(self):
+        self.comment.val += self.match_text(0)
 
+    def pass_doccomment(self):
+        self.container.has.append(self.comment)
 
+    def pass_classsignature(self):
+        class_ = self.class_ = Class()
+        class_.name = self.match_text(0)
+        self.module.has.append(class_)
+        self.container = class_
+
+    def pass_methodsignature(self):
+        method = self.method = Method()
+        method.name = self.match_text(0)
+        self.class_.has.append(method)
+        self.container = method
+
+    def pass_println(self):
+        println = Println()
+        string = String()
+        string.val = self.match_text(0)[1:-1]
+        
+        println.args = [string]
+        self.method.has.append(println)
+
+    def pass_blankline(self):
+        blank = Comment()
+        blank.type = 'blank'
+        blank.val = '\n'
+        self.container.has.append(blank)
+
+#-----------------------------------------------------------------------------#
 class Parser():
     def __init__(self):
 #         y(self.grammar)
@@ -83,24 +114,27 @@ class Parser():
         self.log = Log(enabled=self.debug)
         self.receiver = Receiver(parser=self)
 
-        rule = self.get_rule('Module')
+        rule = self.get_rule('Module', False)
         result = self.match(rule)
         if not result:
             raise ParseError(self, msg="Failed to parse Module.")
         if self.index != len(self.stream):
             raise ParseError(self, msg="Failed to parse entire stream.")
-        self.pop_rule(result)
+        self.pop_rule(result, False)
 
+#         y(self.receiver.ast)
         return self.receiver.ast
 
-    def get_rule(self, name):
-        self.rules.append(name)
-        self.receiver.start(name)
+    def get_rule(self, name, not_):
+        if not not_:
+            self.rules.append(name)
+            self.receiver.start(name)
         return getattr(self.grammar, name)
 
-    def pop_rule(self, result):
-        name = self.rules.pop()
-        self.receiver.finish(name, result)
+    def pop_rule(self, result, not_):
+        if not not_:
+            name = self.rules.pop()
+            self.receiver.finish(name, result)
 
     def match(self, rule):
         self.log.indent()
@@ -152,7 +186,7 @@ class Parser():
         self.log.write("match_rule(%s)" % rule)
         not_ = getattr(rule, '!', False)
         index = self.index
-        subrule = self.get_rule(rule._)
+        subrule = self.get_rule(rule._, not_)
         def match():
             result = self.match(subrule)
             if not_:
@@ -162,7 +196,7 @@ class Parser():
         result = self.repeat_match(match, rule)
         if not (result or self.failure_is_ok or getattr(rule, '!', False)):
             raise ParseError(self, msg="Failed to match: %(stack)s")
-        self.pop_rule(result)
+        self.pop_rule(result, not_)
         return result
 
 
@@ -174,6 +208,7 @@ class Parser():
             return False
         m = re.match(pattern, self.stream[self.index:])
         if (m):
+            self.groups = m.groups()
             self.index += m.end()
             return True
         else:
@@ -244,6 +279,7 @@ class Parser():
        text = self.stream[self.index:]
        return repr(text)
 
+#-----------------------------------------------------------------------------#
 class ParseError(Exception):
     def __init__(self, parser, msg=None):
         self.parser = parser
@@ -276,6 +312,7 @@ Context:
         return self.msg % locals()
 
 
+#-----------------------------------------------------------------------------#
 class Log():
     def __init__(self, enabled=False):
         self.ind = -1
@@ -292,6 +329,7 @@ class Log():
             str = str[0:self.maxlen]
         print str
 
+#-----------------------------------------------------------------------------#
 def y(o):
     import yaml
     print yaml.dump(o, default_flow_style=False)
