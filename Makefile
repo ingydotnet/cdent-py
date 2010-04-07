@@ -1,11 +1,12 @@
-.PHONY: default build test install register sdist clean upload run
+.PHONY: default build test devtest install register sdist clean upload run
 
 ALL_TESTS = $(shell echo tests/*.py)
+ALL_DEV_TESTS = $(shell echo dev-tests/*.py)
 
 default:
 	@echo 'No default action for make'
 
-build test install register sdist clean::
+build test devtest install register sdist clean::
 	python setup.py $@
 
 upload:: clean register
@@ -13,7 +14,7 @@ upload:: clean register
 
 tests:: $(ALL_TESTS)
 
-$(ALL_TESTS): run
+$(ALL_TESTS) $(ALL_DEV_TESTS): run
 	@python -c 'print " Running test: $@ ".center(70, "-") + "\n"'
 	@PYTHONPATH=. python $@
 

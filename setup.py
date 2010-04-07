@@ -13,6 +13,7 @@ import cdent
 
 class Test(Command):
     user_options = []
+    test_dir = 'tests'
 
     def initialize_options(self):
         pass
@@ -24,15 +25,19 @@ class Test(Command):
         build_cmd = self.get_finalized_command('build')
         build_cmd.run()
         sys.path.insert(0, build_cmd.build_lib)
-        sys.path.insert(0, 'tests')
+        sys.path.insert(0, self.test_dir)
         def exit(code):
             pass
         sys.exit = exit
 
-        for test in glob.glob('tests/*.py'):
+        for test in glob.glob(self.test_dir + '/*.py'):
             name = test[test.index('/') + 1: test.rindex('.')]
             module = __import__(name)
             module.cdent.test.main(module=module, argv=[''])
+
+
+class DevTest(Test):
+    test_dir = 'dev-tests'
 
 
 if __name__ == '__main__':
@@ -87,5 +92,8 @@ if __name__ == '__main__':
         packages=packages,
         scripts=['bin/cdent'],
 
-        cmdclass={'test': Test},
+        cmdclass={
+            'test': Test,
+            'devtest': DevTest,
+        },
     )
