@@ -1,5 +1,5 @@
 class World {
     method greet {
-        print "Hello, world\n";
+        say "Hello, world";
     }
 }

@@ -25,9 +25,9 @@ class Emitter(Base):
         self.writeln('}')
 
     def emit_println(self, println): 
-        self.write('print ', indent=True)
+        self.write('say ', indent=True)
         self.emit(println.args)
-        self.writeln(', "\\n";', indent=False)
+        self.writeln(';', indent=False)
 
     def emit_return(self, ret): 
         self.writeln('return;')
