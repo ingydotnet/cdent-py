@@ -1,7 +1,4 @@
 ---
-Line: /$ANY*$EOL/
-BlankLine: /$WS*$EOL/
-
 # Module parsing grammar
 Module:
 - DocComment?
@@ -23,6 +20,10 @@ DocComment:
 
 Comment: (LineComment|BlankLine)
 
+LineComment: /$line_comment_start($Line)/
+
+Line: /$ANY*$EOL/
+BlankLine: /$WS*$EOL/
+
 Ending: //
 
-LineComment: /$line_comment_start($Line)/

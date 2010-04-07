@@ -14,6 +14,8 @@ DS:   /\$/               # A dollar sign
 DOT:  /\./               # A period character
 PS:   /#/                # A pound sign
 BS:   /\\/               # A backslash character
+FS:   /\//               # A forward slash character
+SS:   /\/\//             # A double slash character
 SQ:   /'/                # A single quote character'
 DQ:   /"/                # A double quote character"
 TQ:   /"""/              #" Python triple quote

@@ -17,7 +17,6 @@ class TestPythonParser(cdent.test.TestCase):
         import cdent.emitter.python
 
         emitter = cdent.emitter.python.Emitter()
-        emitter.emit_trailer = False
         output = StringIO.StringIO()
         emitter.open(output)
         emitter.emit_ast(self.ast)
@@ -30,7 +29,6 @@ class TestPythonParser(cdent.test.TestCase):
         import cdent.emitter.perl
 
         emitter = cdent.emitter.perl.Emitter()
-        emitter.emit_trailer = False
         output = StringIO.StringIO()
         emitter.open(output)
         emitter.emit_ast(self.ast)

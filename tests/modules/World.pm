@@ -9,7 +9,6 @@ use Moose;
 sub greet {
     my $self = shift;
     print "Hello, world", "\n";
-    return;
 }
 
 1;
