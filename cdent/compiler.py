@@ -39,3 +39,5 @@ def language(id):
 def class_(id):
     return id_to_class[id]
 
+def version():
+    return __version__

@@ -33,7 +33,13 @@ class Command():
         self.out = sys.stdout
         self.debug = False
 
-        optparser = OptionParser()
+        usage = """
+
+  'cdent' is the compiler for the C'Dent portable module programming language.
+
+        command line usage:  cdent [options]"""
+
+        optparser = OptionParser(usage=usage)
 
         # --compile
         def cb_action(option, opt, value, oparser):
@@ -84,7 +90,8 @@ class Command():
             self.from_ = value
         optparser.add_option(
             "--from", type="choice",
-            choices=['cd.json', 'cd.xml', 'cd.yaml', 'cd.js', 'cd.py'],
+            # choices=['cd.json', 'cd.xml', 'cd.yaml', 'cd.js', 'cd.pm6', 'cd.py'],
+            choices=['cd.yaml', 'cd.py'],
             action="callback", callback=cb_from,
             help="input format -- autodetected from input file name"
         )
@@ -99,7 +106,7 @@ class Command():
             self.to = value
         optparser.add_option(
             "--to", type="choice",
-            choices=['cd.json', 'cd.xml', 'cd.yaml', 'cpp', 'java', 'js', 'php', 'pm', 'pm6', 'py', 'py3', 'rb'],
+            choices=['cd.json', 'cd.xml', 'cd.yaml', 'js', 'php', 'pm', 'pm6', 'py', 'py3', 'rb'],
             action="callback", callback=cb_to,
             help="output format -- autodetected from output file name"
         )
@@ -112,7 +119,7 @@ class Command():
             "--emit-info", type="choice",
             choices=['0', '1'], metavar="0|1",
             action="callback", callback=cb_emit_info,
-            help="emit info header & trailer -- default is on",
+            help="emit info header & trailer -- defaults listed below",
         )
 
         # --emit-header
@@ -132,7 +139,7 @@ class Command():
             "--emit-trailer", type="choice",
             choices=['0', '1'], metavar="0|1",
             action="callback", callback=cb_emit_trailer,
-            help="emit info trailer -- default is on",
+            help="emit info trailer -- default is off",
         )
 
         # --debug
@@ -196,5 +203,10 @@ class Command():
         self.emitter.emit_ast(ast)
 
     def version(self):
-        print "C'Dent version '%s'" % cdent.compiler.version()
+        print """
+  The C'Dent portable module programming language.
 
+  Copyright (c) 2010, Ingy dot Net
+  
+  Version %s
+""" % cdent.compiler.version()
