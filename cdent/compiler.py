@@ -2,7 +2,7 @@
 Meta class for the C'Dent compiler
 """
 
-__version__ = '0.01'
+__version__ = '0.02'
 
 id_to_language = {
     'cd':   "C'Dent",

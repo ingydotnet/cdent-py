@@ -3,8 +3,7 @@
 ALL_TESTS = $(shell echo tests/*.py)
 ALL_DEV_TESTS = $(shell echo dev-tests/*.py)
 
-default:
-	@echo 'No default action for make'
+default: build
 
 build test devtest install register sdist clean::
 	python setup.py $@

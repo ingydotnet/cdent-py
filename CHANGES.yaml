@@ -1,3 +1,9 @@
+- version: 0.2
+  date:    Thu Apr  8 16:39:53 PDT 2010
+  changes:
+  - The SeaPig Release!!
+  - Perl6 and PHP support
+  - Line numbers in AST
 - version: 0.1
   date:    Tue Apr  6 14:19:48 PDT 2010
   changes: Initial version. It actually works!

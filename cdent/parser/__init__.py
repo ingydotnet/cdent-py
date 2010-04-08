@@ -19,6 +19,7 @@ class Receiver():
 
     def start(self, name):
 #         print 'start_%s' % name.lower()
+        self.line = self.parser.stream[0:self.parser.index].count('\n') + 1
         method = getattr(self, 'start_' + name.lower(), None)
         if method:
             method()
@@ -41,7 +42,8 @@ class Receiver():
 
     def start_module(self):
         module = self.module = Module()
-        module.name = 'Mmmmm'
+        module.name = 'Module'
+        module.line = self.line
         self.ast.has.append(module)
         self.container = module
 
@@ -49,6 +51,7 @@ class Receiver():
         self.comment = Comment()
         self.comment.type = 'doc'
         self.comment.val = ''
+        self.comment.line = self.line
 
     def pass_doccommentline(self):
         self.comment.val += self.match_text(0)
@@ -59,17 +62,20 @@ class Receiver():
     def pass_classsignature(self):
         class_ = self.class_ = Class()
         class_.name = self.match_text(0)
+        class_.line = self.line
         self.module.has.append(class_)
         self.container = class_
 
     def pass_methodsignature(self):
         method = self.method = Method()
         method.name = self.match_text(0)
+        method.line = self.line
         self.class_.has.append(method)
         self.container = method
 
     def pass_println(self):
         println = Println()
+        println.line = self.line
         string = String()
         string.val = self.match_text(0)[1:-1]
         
@@ -78,6 +84,7 @@ class Receiver():
 
     def pass_blankline(self):
         blank = Comment()
+        blank.line = self.line
         blank.type = 'blank'
         blank.val = '\n'
         self.container.has.append(blank)
