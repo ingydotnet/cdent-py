@@ -1,6 +1,6 @@
 .PHONY: always
 
-ALL = python
+ALL = python perl6
 ALL_GRAMMAR_MODULES = $(ALL:%=../cdent/parser/%/grammar.py)
 ALL_DIRS = $(ALL:%=../cdent/parser/%/)
 ALL_INDEX = $(ALL:%=../cdent/parser/%/__init__.py)

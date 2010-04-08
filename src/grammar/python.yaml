@@ -6,32 +6,12 @@ DocCommentEnd: /$TQ$WS*$EOL/
 
 IncludeCDent: /from cdent import $STAR/
 
-Class:
-- ClassSignature
-- ClassBody
-
 ClassSignature: /class$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
-ClassBody:
-- indent
-- Comment*
-- Method
-- (Method|Comment)*
-- undent
-
-Method:
-- MethodSignature
-- MethodBody
+ClassEnd: //
 
 MethodSignature: /^def$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
-MethodBody:
-- indent
-- Statement+
-- undent
-
-Statement: (PrintLn|Comment)
+MethodEnd: //
 
 PrintLn: /print$WS+($ANY+)$EOL/
-
-Id: /$WC+/

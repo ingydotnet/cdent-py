@@ -21,7 +21,10 @@ DQ:   /"/                # A double quote character"
 TQ:   /"""/              #" Python triple quote
 LP:   /\(/               # A left parentheses
 RP:   /\)/               # A right parentheses
+LCB:  /\{/               # A left curly brace
+RCB:  /\}/               # A right curly brace
 COL:  /:/                # A colon
+SC:   /;/                # A semicolon
 PLUS: /\+/               # A plus
 DASH: /-/                # A minus
 STAR: /\*/               # A star

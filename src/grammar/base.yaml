@@ -18,6 +18,31 @@ DocComment:
   x: '*'
 - DocCommentEnd
 
+Class:
+- ClassSignature
+- ClassBody
+- ClassEnd
+
+ClassBody:
+- indent
+- Comment*
+- Method
+- (Method|Comment)*
+- undent
+
+Method:
+- MethodSignature
+- MethodBody
+- MethodEnd
+
+MethodBody:
+- indent
+- Statement
+- (Statement|Comment)*
+- undent
+
+Statement: (PrintLn|Comment)
+
 Comment: (LineComment|BlankLine)
 
 LineComment: /$line_comment_start($Line)/
@@ -27,3 +52,4 @@ BlankLine: /$WS*$EOL/
 
 Ending: //
 
+Id: /$WC+/

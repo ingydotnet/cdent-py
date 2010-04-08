@@ -1,0 +1,13 @@
+line_comment_start: /$SS/
+
+DocCommentBegin: /$FS$STAR$STAR$WS*$EOL/
+DocCommentLine: /$WS?($ANY*$EOL)/
+DocCommentEnd: /$WS?$STAR$FS*$EOL/
+
+IncludeCDent: /load$LP($ANY+)$RP$SC/
+
+ClassSignature: /.../
+
+MethodSignature: /.../
+
+PrintLn: /.../
