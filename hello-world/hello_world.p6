@@ -1,4 +1,4 @@
-use World6;
+use World;
 
 my $world = World.new;
 
