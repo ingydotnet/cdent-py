@@ -6,14 +6,17 @@ import cdent.parser.perl6
 class TestPythonParser(cdent.test.TestCase):
 
     def test_parse_perl6(self):
-        # XXX
-        self.assertTrue(True)
-        return
-
         parser = cdent.parser.perl6.Parser()
+        # parser.debug = True
         input = file('tests/modules/world.cd.pm6', 'r').read()
         parser.open(input)
-        ast = parser.parse()
+        try:
+            ast = parser.parse()
+        except cdent.parser.ParseError, err:
+            print err
+            return
+            exit(1)
+
 
         parser = cdent.parser.cdent.yaml.Parser()
         input = file('tests/modules/world.cd.yaml', 'r').read()

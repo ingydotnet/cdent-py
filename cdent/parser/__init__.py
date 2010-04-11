@@ -209,10 +209,15 @@ class Parser():
 
     def match_re(self, regexp):
         pattern = regexp._
-        self.log.write("match_re(%s)" % pattern)
-        self.log.write(">>>>>>>>%s" % self.current_text())
-        if not self.match_indent():
-            return False
+        self.log.write("match_re(%s) %s" % (pattern, [self.indents, self.undents]))
+        line = self.stream[0:self.index].count('\n') + 1
+        self.log.write("%s >>>>> %s" % (line, self.current_text()))
+        if self.index == 0 or self.stream[self.index - 1] == '\n':
+            if not self.match_indent():
+                self.log.write("indent failed")
+                return False
+            else:
+                self.log.write("indent passed")
         m = re.match(pattern, self.stream[self.index:])
         if (m):
             self.groups = m.groups()
@@ -243,8 +248,6 @@ class Parser():
         return True
 
     def match_indent(self):
-        if self.index > 0 and self.stream[self.index - 1] != '\n':
-            return True
         if self.stream[self.index:] == '':
             if not self.indents:
                 return True
@@ -252,14 +255,12 @@ class Parser():
                 self.undents.append(self.indents.pop())
             return False
         if self.indents:
-            m = re.match(self.indents[-1], self.stream[self.index:])
-            if m:
-                self.index += m.end()
+            if self.stream[self.index:].startswith(self.indents[-1]):
+                self.index += len(self.indents[-1])
             else:
                 self.undents.append(self.indents.pop())
                 while self.indents:
-                    m = re.match(self.indents[-1], self.stream[self.index:])
-                    if m:
+                    if not self.stream[self.index:].startswith(self.indents[-1]):
                         self.undents.append(self.indents.pop())
                     else:
                         break
