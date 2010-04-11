@@ -1,3 +1,7 @@
+- version: 0.3
+  date:    Thu Apr  8 20:45:02 PDT 2010
+  changes:
+  - Add Java (yuck) support. Thanks SeaPig!!!! :\
 - version: 0.2
   date:    Thu Apr  8 16:39:53 PDT 2010
   changes:
