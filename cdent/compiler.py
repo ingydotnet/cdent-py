@@ -2,7 +2,7 @@
 Meta class for the C'Dent compiler
 """
 
-__version__ = '0.02'
+from cdent import __version__
 
 id_to_language = {
     'cd':   "C'Dent",
