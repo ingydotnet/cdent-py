@@ -6,11 +6,11 @@ DocCommentEnd: /$PS{3}$EOL/
 
 IncludeCDent: /use CDent;/
 
-ClassSignature: /class$WS+($Id)$WS+$LCB$EOL/
+ClassStart: /class$WS+($Id)$WS+$LCB$EOL/
 
 ClassEnd: /$RCB$EOL/
 
-MethodSignature: /method$WS+($Id)$WS+$LCB$EOL/
+MethodStart: /method$WS+($Id)$WS+$LCB$EOL/
 
 MethodEnd: /$RCB$EOL/
 

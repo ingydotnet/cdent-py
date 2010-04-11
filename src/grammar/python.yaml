@@ -6,11 +6,11 @@ DocCommentEnd: /$TQ$WS*$EOL/
 
 IncludeCDent: /from cdent import $STAR/
 
-ClassSignature: /class$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
+ClassStart: /class$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
 ClassEnd: //
 
-MethodSignature: /^def$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
+MethodStart: /^def$WS+($Id)$LP(?:$Id)?$RP$COL$EOL/
 
 MethodEnd: //
 

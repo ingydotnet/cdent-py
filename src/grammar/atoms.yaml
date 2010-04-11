@@ -12,6 +12,8 @@ WC:   /\w/               # ie '[A-Za-z0-9_]' - A "word" character
 NUM:  /[0-9]/            # A numeric digit
 DS:   /\$/               # A dollar sign
 DOT:  /\./               # A period character
+COM:  /,/                # A comma
+EQ:   /=/                # An equals sign
 PS:   /#/                # A pound sign
 BS:   /\\/               # A backslash character
 FS:   /\//               # A forward slash character

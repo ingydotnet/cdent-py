@@ -15,7 +15,7 @@ class Emitter(Base):
     def emit_class(self, class_): 
         name = class_.name
         self.writeln('package %s;' % name)
-        self.writeln('use Moose;')
+        self.writeln('use CDent::Class;')
         self.writeln()
         self.emit(class_.has)
         self.writeln()

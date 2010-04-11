@@ -59,14 +59,14 @@ class Receiver():
     def pass_doccomment(self):
         self.container.has.append(self.comment)
 
-    def pass_classsignature(self):
+    def pass_classstart(self):
         class_ = self.class_ = Class()
         class_.name = self.match_text(0)
         class_.line = self.line
         self.module.has.append(class_)
         self.container = class_
 
-    def pass_methodsignature(self):
+    def pass_methodstart(self):
         method = self.method = Method()
         method.name = self.match_text(0)
         method.line = self.line

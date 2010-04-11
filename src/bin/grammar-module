@@ -54,7 +54,7 @@ class GrammarModule():
         for k in regexps:
             v = regexps[k]
             while True:
-                v2 = re.sub(r'\$(\w+)', f, v)
+                v2 = re.sub(r'\$<?(\w+)>?', f, v)
                 if v2 == v:
                     break
                 v = v2

@@ -4,7 +4,7 @@
 ###
 
 package World;
-use Moose;
+use CDent::Class;
 
 sub greet {
     my $self = shift;

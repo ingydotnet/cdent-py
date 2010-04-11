@@ -1,3 +1,12 @@
+- Refactor grammar/base.yaml
+- Start writing testml tests for C'Dent
+- Write JavaScript Parser
+- Write Perl 5 Parser
+- Setup easy_install support
+
+- cdent.parser.perl
+- cdent.parser.ruby
+- cdent.parser.javascript
 - cdent.emitter.scala
 - cdent.parser.cdent.xml
 - cdent.emitter.cdent.xml

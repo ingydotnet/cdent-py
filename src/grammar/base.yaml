@@ -1,13 +1,14 @@
 ---
 # Module parsing grammar
 Module:
+- ModuleStart
 - DocComment?
 - Comment*
 - IncludeCDent?
 - Comment*
 - Class
 - (Class|Comment)*
-- Ending
+- ModuleEnd
 - Comment*
 
 DocComment:
@@ -19,7 +20,7 @@ DocComment:
 - DocCommentEnd
 
 Class:
-- ClassSignature
+- ClassStart
 - ClassBody
 - ClassEnd
 
@@ -31,7 +32,7 @@ ClassBody:
 - undent
 
 Method:
-- MethodSignature
+- MethodStart
 - MethodBody
 - MethodEnd
 
@@ -50,6 +51,7 @@ LineComment: /$line_comment_start($Line)/
 Line: /$ANY*$EOL/
 BlankLine: /$WS*$EOL/
 
-Ending: //
+ModuleStart: //
+ModuleEnd: //
 
 Id: /$WC+/

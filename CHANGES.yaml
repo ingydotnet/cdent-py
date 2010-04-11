@@ -1,3 +1,7 @@
+- version: 0.4
+  date:    Sun Apr 11 10:52:31 PDT 2010
+  changes:
+  - Add .cd.pm6 and .cd.js input support
 - version: 0.3
   date:    Thu Apr  8 20:45:02 PDT 2010
   changes:

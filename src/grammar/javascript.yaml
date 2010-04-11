@@ -1,13 +1,17 @@
 line_comment_start: /$SS/
 
-DocCommentBegin: /$FS$STAR$STAR$WS*$EOL/
-DocCommentLine: /$WS?($ANY*$EOL)/
-DocCommentEnd: /$WS?$STAR$FS*$EOL/
+DocCommentBegin: /$FS$STAR$STAR$EOL/
+DocCommentLine: /$WS$STAR$WS?($ANY*$EOL)/
+DocCommentEnd: /$WS$STAR$FS$EOL/
 
-IncludeCDent: /load$LP($ANY+)$RP$SC/
+IncludeCDent: /load$WS$LP$<SQ>cdent.js$<SQ>$RP$SC/
 
-ClassSignature: /.../
+ClassStart: /$<LP>this$DOT($Id)$WS+$EQ$WS+function$LP$RP$WS$LCB$RCB$RP$<DOT>prototype$WS+$EQ$WS+$LCB$EOL/
 
-MethodSignature: /.../
+ClassEnd: /$RCB$SC$EOL/
 
-PrintLn: /.../
+MethodStart: /($Id)$COL$WS+function$LP$RP$WS+$LCB$EOL/
+
+MethodEnd: /$RCB$COM?$EOL/
+
+PrintLn: /print$LP($ANY+)$RP$SC$EOL/

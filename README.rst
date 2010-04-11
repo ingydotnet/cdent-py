@@ -7,8 +7,8 @@ C'Dent is a programming language that:
    are written once, and then compiled to equivalent port modules in any
    number of supported programming languages.
 2) Has multiple input syntaxes. Including defined subsets of:
-   - Perl
-   - Python
+   - Perl and Perl 6
+   - Python and Python 3000
    - Ruby
    - JavaScript
    - Java
@@ -18,15 +18,14 @@ C'Dent is a programming language that:
 4) Emits C'Dent trees to several existing programming languages,
    including:
    - C'Dent - the compiled tree form serialized as YAML or XML
-   - Perl
-   - Python
+   - Perl and Perl 6
+   - Python and Python 3000
    - Ruby
    - JavaScript
    - PHP
    - Java
-   - Perl 6
-   - Python 3
-   - C++
+   - Scala
+   - C and C++
    - CIL (.NET Common Intermediate Language)
    - PIR (Parrot Intermediate Runtime)
 5) Uses static implicit typing to assign types to all objects at
@@ -82,6 +81,43 @@ Which produces::
     end
 
 You can compile it to many other languages by changing the value of `--to=`.
+
+DEVELOPMENT STATUS
+------------------
+
+C'Dent can currently parse modules with a simplistic grammar of Module/Classes/Methods/Print/Comments to an AST form and generate equivalent output modules in many languages:
+
+C'Dent can currently parse:
+
+* Python
+* JavaScript
+* Perl 6
+* C'Dent/YAML (a C'Dent AST in YAML form)
+
+C'Dent can currently produce:
+
+* Perl
+* Perl 6
+* Python
+* Python 3
+* PHP
+* Ruby
+* Java
+* JavaScript
+* C'Dent/YAML
+
+Next Steps:
+
+* Add variables and assignments
+* Add type detection
+* Add Ruby and Perl as input
+* Add Scala and C++ as output
+* Lots of other stuff
+
+COMMUNITY
+---------
+
+Join #cdent on irc.freenode.net.
 
 COPYRIGHT
 ---------
