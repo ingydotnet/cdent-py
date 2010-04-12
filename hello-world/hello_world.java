@@ -1,7 +1,7 @@
-import World;
+import org.cdent.World;
 
-public class hw {
+public class hello_world {
     public static void main(String[] args) {
-        World().greet();
+        new World().greet();
     }
 }

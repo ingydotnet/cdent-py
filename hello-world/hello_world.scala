@@ -1,3 +1,3 @@
-import foo.World._
+import org.cdent.World._
 
-World().greet();
+World().greet()

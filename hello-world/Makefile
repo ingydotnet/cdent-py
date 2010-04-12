@@ -1,6 +1,6 @@
 .PHONY: java cpp
 
-CLASSPATH = .
+export CLASSPATH = .
 
 default:
 	@echo 'make java                  # Compile the Java example'
@@ -8,14 +8,14 @@ default:
 
 java: hello_world.class
 
-# javarun: hello_world.class
-# 	CLASSPATH=$(CLASSPATH) java hello_world
+javarun: hello_world.class
+	@java hello_world
 
-hello_world.class: hello_world.java World.class
-	CLASSPATH=$(CLASSPATH) javac $<
+hello_world.class: hello_world.java org/cdent/World.class
+	@javac $<
 
-World.class: World.java
-	CLASSPATH=$(CLASSPATH) javac $<
+org/cdent/World.class: org/cdent/World.java
+	@javac $<
 
 # C++ stuff in progress.
 cpp: hello_world
@@ -24,5 +24,6 @@ hello_world: hello_world.o
 	mv $< $@
 
 clean:
-	rm -fr *.class *.pyc *.o hello_world
+	find . -name \*.class -exec rm -f {} \;
+	rm -fr *.pyc *.o hello_world
 

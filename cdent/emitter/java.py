@@ -21,7 +21,7 @@ class Emitter(Base):
 
     def emit_method(self, method): 
         name = method.name
-        self.writeln('public static void %s() {' % name)
+        self.writeln('public void %s() {' % name)
         self.emit(method.has, indent=True)
         self.writeln('}')
 
