@@ -8,7 +8,7 @@ class TestPythonParser(cdent.test.TestCase):
     def test_parse_perl6(self):
         parser = cdent.parser.perl6.Parser()
         # parser.debug = True
-        input = file('tests/modules/world.cd.pm6', 'r').read()
+        input = file('tests/modules/World.cd.pm6', 'r').read()
         parser.open(input)
         try:
             ast = parser.parse()
