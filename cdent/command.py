@@ -156,7 +156,7 @@ class Command():
         def cb_version(option, opt, value, oparser):
             self.action = 'version'
         optparser.add_option(
-            "--version",
+            "-v", "--version",
             action="callback", callback=cb_version,
             help="print cdent version"
         )
@@ -204,9 +204,18 @@ class Command():
 
     def version(self):
         print """
-  The C'Dent portable module programming language.
+The C'Dent portable module programming language.
+Copyright (c) 2010, Ingy dot Net
+See: http://www.cdent.org
 
-  Copyright (c) 2010, Ingy dot Net
-  
-  Version %s
+C'Dent may be copied only under the terms of the BSD license.
+See: http://cdent.org/license/
+
+C'Dent Language Specification: version 0.0.1
+See: http://cdent.org/specification/
+
+C'Dent Compiler Implementation: cdent.py, version %s 
+See: http://pypi.python.org/pypi/cdent/
+
+C'Dent IRC channel: #cdent on irc.freenode.net
 """ % cdent.compiler.version()
