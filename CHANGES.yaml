@@ -1,3 +1,8 @@
+- version: 0.5
+  date:    Wed Apr 21 06:58:39 PDT 2010
+  changes:
+  - README symlink screwed up easy_install.
+  - Require setuptools so we can depend on pyyaml.
 - version: 0.4
   date:    Sun Apr 11 10:52:31 PDT 2010
   changes:

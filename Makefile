@@ -19,4 +19,4 @@ $(ALL_TESTS) $(ALL_DEV_TESTS): run
 
 clean::
 	find . -name '*.pyc' | xargs rm
-	rm -fr build dist MANIFEST
+	rm -fr build dist MANIFEST cdent.egg-info

@@ -6,7 +6,18 @@ import sys
 import codecs
 import glob
 
-from distutils.core import setup, Command
+from distutils.core import Command
+
+try:
+    from setuptools import setup
+except ImportError, err:
+    sys.stderr.write("""
+You need to install the 'setuptools' Python package first.
+
+You can get it from here: http://pypi.python.org/pypi/setuptools/
+
+""")
+    sys.exit(1)
 
 import cdent
 
@@ -91,6 +102,10 @@ if __name__ == '__main__':
 
         packages=packages,
         scripts=['bin/cdent'],
+
+        install_requires = [
+            'pyyaml',
+        ],
 
         cmdclass={
             'test': Test,
