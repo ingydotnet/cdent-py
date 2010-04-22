@@ -1,0 +1,41 @@
+name: cdent
+version_from_module: cdent
+
+packages_from:
+- cdent
+
+## See: http://pypi.python.org/pypi?:action=list_classifiers
+classifiers:
+- 'Development Status :: 2 - Pre-Alpha'
+- 'Environment :: Console'
+- 'Intended Audience :: Developers'
+- 'License :: OSI Approved :: BSD License'
+- 'Programming Language :: Awk'
+- 'Programming Language :: C#'
+- 'Programming Language :: C++'
+- 'Programming Language :: Erlang'
+- 'Programming Language :: Haskell'
+- 'Programming Language :: Java'
+- 'Programming Language :: JavaScript'
+- 'Programming Language :: Other Scripting Engines'
+- 'Programming Language :: Perl'
+- 'Programming Language :: PHP'
+- 'Programming Language :: Python'
+- 'Programming Language :: Ruby'
+- 'Programming Language :: Scheme'
+- 'Programming Language :: Tcl'
+- 'Topic :: Software Development'
+- 'Topic :: System :: Software Distribution'
+- 'Topic :: Utilities'
+
+description: A Portable Module Programming Language
+
+long_description_from: README.rst
+
+url: http://www.cdent.org/
+
+scripts:
+- bin/cdent
+
+install_requires:
+- pyyaml
