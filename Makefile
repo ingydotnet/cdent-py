@@ -54,9 +54,14 @@ PYTHON = python
 PACKAGE_FILES = \
 	package/__init__.py \
 	package/errors.py \
-	package/info.yaml \
 
 SETUP_TARGETS = \
+	Makefile \
+	setup.py \
+	$(PACKAGE_FILES) \
+	package/info.yaml \
+
+UPGRADE_TARGETS = \
 	Makefile \
 	setup.py \
 	$(PACKAGE_FILES) \
@@ -80,6 +85,11 @@ package-info::
 
 # This rule is disabled after initial setup.
 # setup: package $(SETUP_TARGETS) _fixup _next
+
+unsetup:
+	rm -f $(UPGRADE_TARGETS)
+
+upgrade: unsetup $(UPGRADE_TARGETS) _fixup package-info
 
 _fixup::
 	$(PYTHON) $(PACKAGE_BASE)/bin/fix_makefile.py "$(PACKAGE_BASE)"
