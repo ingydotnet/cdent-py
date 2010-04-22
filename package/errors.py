@@ -46,6 +46,18 @@ put all the pertinent information in there in order to proceed.
 
 """
 
+ENOSETUPTOOLS = """
+The package you are trying to install depends on an installation feature that
+requires the 'setuptools' Python module, but you do not have that module
+installed. You will need to install 'setuptools' before proceeding with this
+install.
+
+You can find setuptools here:
+
+    http://pypi.python.org/pypi/setuptools/
+
+"""
+
 def die(msg):
     sys.stderr.write(msg)
     sys.exit(1)

@@ -5,7 +5,7 @@ package package package
 import os, sys, glob
 from distutils.core import Command
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 has_setuptools = False
 
@@ -20,19 +20,30 @@ except ImportError, err:
     except ImportError, err:
         die(ENOSETUP)
 
-def setup():
-    try:
-        import package.info
-    except ImportError, err:
-        die(ENOINFO)
+class setup():
+    def __init__(self):
+        args = self.get_args()
+        self.check_args(args)
+        real_setup(**args)
 
-    args = package.info.get()
-    args['cmdclass'] = {
-        'test': Test,
-        'devtest': DevTest,
-    }
+    def get_args(self):
+        try:
+            import package.info
+        except ImportError, err:
+            die(ENOINFO)
 
-    real_setup(**args)
+        args = package.info.get()
+        args['cmdclass'] = {
+            'test': Test,
+            'devtest': DevTest,
+        }
+        return args
+
+    def check_args(self, args):
+        if args.get('install_requires') and 'install' in sys.argv:
+            if not has_setuptools:
+                die(ENOSETUPTOOLS)
+
 
 class Test(Command):
     user_options = []

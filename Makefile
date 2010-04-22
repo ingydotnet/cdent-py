@@ -85,6 +85,7 @@ package-info::
 
 # This rule is disabled after initial setup.
 # setup: package $(SETUP_TARGETS) _fixup _next
+# TODO - assert that package dir does not exist
 
 unsetup:
 	rm -f $(UPGRADE_TARGETS)
@@ -97,7 +98,7 @@ _fixup::
 _next::
 	@cat $(PACKAGE_BASE)/NextSteps.txt
 
-Makefile $(PACKAGE_FILES)::
+Makefile $(PACKAGE_FILES) package/info.yaml::
 	cp $(PACKAGE_BASE)/$@ $@
 
 setup.py::
@@ -110,6 +111,8 @@ package::
 #-----------------------------------------------------------------------------#
 # setup.py targets
 #-----------------------------------------------------------------------------#
+register:: package-info
+
 build test devtest install register sdist clean::
 	$(PYTHON) setup.py $@
 
@@ -129,3 +132,4 @@ clean::
 # TODO:
 # - Add a 'MANIFEST.in' target
 # - Make sure that 'package' is in MANIFEST.in
+# - Backup setup.py on 'make setup'

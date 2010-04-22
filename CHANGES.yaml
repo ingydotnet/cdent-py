@@ -1,3 +1,7 @@
+- version: 0.5.2
+  date:    Thu Apr 22 07:58:30 PDT 2010
+  changes:
+  - Upgrade package-py stuff
 - version: 0.5
   date:    Wed Apr 21 06:58:39 PDT 2010
   changes:
