@@ -5,7 +5,7 @@ package package package
 import os, sys, glob
 from distutils.core import Command
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 has_setuptools = False
 
@@ -67,7 +67,7 @@ class Test(Command):
         for test in glob.glob(self.test_dir + '/*.py'):
             name = test[test.index('/') + 1: test.rindex('.')]
             module = __import__(name)
-            module.cdent.test.main(module=module, argv=[''])
+            module.main(module=module, argv=[''])
 
 class DevTest(Test):
     test_dir = 'dev-tests'

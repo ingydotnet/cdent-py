@@ -2,9 +2,9 @@ import os
 import sys
 import StringIO
 
-import cdent.test
+from package.unittest import *
 
-class TestPythonParser(cdent.test.TestCase):
+class TestPythonParser(TestCase):
     def setUp(self):
         import cdent.parser.cdent.yaml
 
@@ -38,5 +38,5 @@ class TestPythonParser(cdent.test.TestCase):
         self.assertTextEquals(got, expected, 'Emit world.pm')
 
 if __name__ == '__main__':
-    cdent.test.main()
+    main()
 

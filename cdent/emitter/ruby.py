@@ -25,9 +25,9 @@ class Emitter(Base):
         self.writeln('end')
 
     def emit_println(self, println): 
-        self.write('puts(', indent=True)
+        self.write('puts ', indent=True)
         self.emit(println.args)
-        self.writeln(')', indent=False)
+        self.writeln('', indent=False)
 
     def emit_return(self, ret): 
         self.writeln('return')

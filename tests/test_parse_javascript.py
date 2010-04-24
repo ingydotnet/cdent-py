@@ -1,9 +1,9 @@
-import cdent.test
+from package.unittest import *
 
 import cdent.parser.cdent.yaml
 import cdent.parser.javascript
 
-class TestPythonParser(cdent.test.TestCase):
+class TestPythonParser(TestCase):
 
     def test_parse_javscript(self):
         parser = cdent.parser.javascript.Parser()
@@ -26,4 +26,4 @@ class TestPythonParser(cdent.test.TestCase):
         self.assertEqual(ast.__class__.__name__, expected.__class__.__name__)
 
 if __name__ == '__main__':
-    cdent.test.main()
+    main()

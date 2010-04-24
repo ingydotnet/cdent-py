@@ -41,6 +41,6 @@ def get():
                 'cdent.parser.python'],
   'scripts': ['bin/cdent'],
   'url': 'http://www.cdent.org/',
-  'version': '0.5.2'}
+  'version': '0.5.3'}
 )
     return dict

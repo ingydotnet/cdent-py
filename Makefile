@@ -47,13 +47,13 @@
 # This variable is hardcoded into the Makefile by initial setup.
 # If you move package-py, you need to change this.
 PACKAGE_BASE = ../package-py
-# TODO - Add a test to ensure PACKAGE_BASE is valid.
 
 PYTHON = python
 
 PACKAGE_FILES = \
 	package/__init__.py \
 	package/errors.py \
+	package/unittest.py \
 
 SETUP_TARGETS = \
 	Makefile \
@@ -85,7 +85,6 @@ package-info::
 
 # This rule is disabled after initial setup.
 # setup: package $(SETUP_TARGETS) _fixup _next
-# TODO - assert that package dir does not exist
 
 unsetup:
 	rm -f $(UPGRADE_TARGETS)
@@ -128,8 +127,3 @@ $(ALL_TESTS) $(ALL_DEV_TESTS): run
 clean::
 	find . -name '*.pyc' | xargs rm
 	rm -fr build dist MANIFEST *.egg-info
-
-# TODO:
-# - Add a 'MANIFEST.in' target
-# - Make sure that 'package' is in MANIFEST.in
-# - Backup setup.py on 'make setup'
