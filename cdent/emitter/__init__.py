@@ -48,7 +48,7 @@ class Emitter():
         self.output.write(string) 
 
     def writeln(self, string='', indent=True):
-        if indent:
+        if indent and len(string) > 0:
             self.output.write(self.indentation) 
         self.output.write(string + '\n') 
 
@@ -56,10 +56,10 @@ class Emitter():
         self.writeln(self.LINE_COMMENT_PREFIX + comment)
 
     def write_block_comment(self, comment):
-        self.write(self.BLOCK_COMMENT_BEGIN)
+        self.write(self.BLOCK_COMMENT_BEGIN, indent=True)
         for line in comment.splitlines():
             self.writeln(self.BLOCK_COMMENT_PREFIX + line)
-        self.write(self.BLOCK_COMMENT_END)
+        self.write(self.BLOCK_COMMENT_END, indent=True)
 
     def indent(self):
         self.indentation += '    '

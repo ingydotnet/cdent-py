@@ -1,7 +1,11 @@
+- version: 0.5.5
+  date:    Sun Apr 25 01:26:06 PDT 2010
+  changes:
+  - Add ActionScript. kawa++
 - version: 0.5.4
   date:    Sat Apr 24 19:23:44 PDT 2010
   changes:
-  - Add Go output support
+  - Add Go output support. au++ sartak++
 - version: 0.5.3
   date:    Thu Apr 22 09:36:52 PDT 2010
   changes:

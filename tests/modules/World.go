@@ -7,5 +7,5 @@ package World
 import fmt "fmt"
 
 func greet() {
-    fmt.Println("Hello, world");
+    fmt.Println("Hello, world")
 }
