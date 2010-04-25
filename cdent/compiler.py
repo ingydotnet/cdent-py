@@ -7,6 +7,7 @@ from cdent import __version__
 id_to_language = {
     'cd':   "C'Dent",
     'cpp':  'C++',
+    'go':   'Go',
     'java': 'Java',
     'js':   'JavaScript',
     'php':  'PHP',
@@ -25,6 +26,7 @@ id_to_class = {
     'cd.pm6': 'perl6',
     'cd.py': 'python',
     'cpp':  'cpp',
+    'go':   'go',
     'java': 'java',
     'js':   'javascript',
     'php':  'php',

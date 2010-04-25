@@ -1,3 +1,7 @@
+- version: 0.5.4
+  date:    Sat Apr 24 19:23:44 PDT 2010
+  changes:
+  - Add Go output support
 - version: 0.5.3
   date:    Thu Apr 22 09:36:52 PDT 2010
   changes:

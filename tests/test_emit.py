@@ -37,6 +37,18 @@ class TestPythonParser(TestCase):
 
         self.assertTextEquals(got, expected, 'Emit world.pm')
 
+    def test_emit_go(self):
+        import cdent.emitter.go
+
+        emitter = cdent.emitter.go.Emitter()
+        output = StringIO.StringIO()
+        emitter.open(output)
+        emitter.emit_ast(self.ast)
+        got = output.getvalue()
+        expected = file('tests/modules/World.go').read()
+
+        self.assertTextEquals(got, expected, 'Emit world.go')
+
 if __name__ == '__main__':
     main()
 
