@@ -1,8 +1,5 @@
+include: ../package-py/ingy-info.yaml
 name: cdent
-version_from_module: cdent
-
-packages_from:
-- cdent
 
 ## See: http://pypi.python.org/pypi?:action=list_classifiers
 classifiers:
@@ -28,14 +25,7 @@ classifiers:
 - 'Topic :: System :: Software Distribution'
 - 'Topic :: Utilities'
 
-description: A Portable Module Programming Language
-
-long_description_from: README.rst
-
 url: http://www.cdent.org/
-
-scripts:
-- bin/cdent
 
 install_requires:
 - pyyaml

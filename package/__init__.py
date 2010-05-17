@@ -5,7 +5,7 @@ package package package
 import os, sys, glob
 from distutils.core import Command
 
-__version__ = '0.0.3'
+__version__ = '0.0.8'
 
 has_setuptools = False
 

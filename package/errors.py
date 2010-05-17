@@ -4,6 +4,11 @@ This module provides package management support stuff.
 
 import sys
 
+ENONAME = """
+The 'name' entry is required in your `info.yaml` file.
+
+"""
+
 ENOSETUP = """
 For some bizarre reason, I cannot locate your Python 'setuptools' or
 'distutils' packages. Paint me pathetic, but I just cannot go on at this
