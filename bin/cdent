@@ -7,4 +7,4 @@ import sys
 
 from cdent.command import Command
 
-Command(sys.argv).main()
+Command(sys.argv[1:]).run()

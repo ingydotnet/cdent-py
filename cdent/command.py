@@ -7,14 +7,15 @@ import os
 import sys
 import re
 
-from optparse import *
+import optparse
 
 import cdent.compiler
 
 
 class Command():
     def __init__(self, args):
-        sys.argv = args
+        sys.argv = sys.argv[0:1]
+        sys.argv.extend(args)
         self.action = None
         self.from_ = None
         self.to = None
@@ -39,7 +40,7 @@ class Command():
 
         command line usage:  cdent [options]"""
 
-        optparser = OptionParser(usage=usage)
+        optparser = optparse.OptionParser(usage=usage)
 
         # --compile
         def cb_action(option, opt, value, oparser):
@@ -53,7 +54,7 @@ class Command():
         # --in=FILE
         def cb_in(option, opt, value, oparser):
             if not os.path.exists(value):
-                raise OptionError(value + ' file does not exist', opt)
+                raise optparse.OptionError(value + ' file does not exist', opt)
             self.in_ = file(value, 'r')
             m = re.match(r'.*?\.((?:\cd?\.)?\w+)$', value)
             if m:
@@ -79,7 +80,7 @@ class Command():
         # --from=LANG_ID
         def cb_from(option, opt, value, oparser):
             if self.action != 'compile':
-                raise OptionError('--from used before --compile')
+                raise optparse.OptionError('--from used before --compile')
             class_ = cdent.compiler.class_(value)
             exec(
                 "from cdent.parser." +
@@ -99,7 +100,7 @@ class Command():
         # --to=LANG_ID
         def cb_to(option, opt, value, oparser):
             if self.action != 'compile':
-                raise OptionError('--to used before --compile')
+                raise optparse.OptionError('--to used before --compile')
             class_ = cdent.compiler.class_(value)
             exec "from cdent.emitter." + class_ + " import Emitter" in globals()
             self.emitter = Emitter()
@@ -174,21 +175,24 @@ class Command():
         # validate options
         try:
             if (args):
-                raise OptionError('extra arguments found', args)
+                raise optparse.OptionError('extra arguments found', args)
             if (not self.action):
-                raise OptionError('is required', '--compile | --help | --version')
+                raise optparse.OptionError(
+                    'is required',
+                    '--compile | --help | --version'
+                )
             if self.action == 'compile':
                 if (not self.from_):
-                    raise OptionError('is required', '--from')
+                    raise optparse.OptionError('is required', '--from')
                 if (not self.to):
-                    raise OptionError('is required', '--to')
-        except OptionError, err:
+                    raise optparse.OptionError('is required', '--to')
+        except optparse.OptionError, err:
             sys.stderr.write(str(err) + '\n\n')
             # optparse can't write this to stderr :(
             optparser.print_help()
             sys.exit(1)
 
-    def main(self):
+    def run(self):
         getattr(self, self.action)()
 
     def compile(self):
