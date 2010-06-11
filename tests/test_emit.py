@@ -37,6 +37,18 @@ class TestPythonParser(TestCase):
 
         self.assertTextEquals(got, expected, 'Emit world.pm')
 
+    def test_emit_pir(self):
+        import cdent.emitter.pir
+
+        emitter = cdent.emitter.pir.Emitter()
+        output = StringIO.StringIO()
+        emitter.open(output)
+        emitter.emit_ast(self.ast)
+        got = output.getvalue()
+        expected = file('tests/modules/World.pir').read()
+
+        self.assertTextEquals(got, expected, 'Emit world.pir')
+
     def test_emit_go(self):
         import cdent.emitter.go
 

@@ -107,7 +107,7 @@ class Command():
             self.to = value
         optparser.add_option(
             "--to", type="choice",
-            choices=['as', 'go', 'java', 'js', 'php', 'pm', 'pm6', 'py', 'py3', 'rb', 'cd.yaml'],
+            choices=['as', 'go', 'java', 'js', 'php', 'pir', 'pm', 'pm6', 'py', 'py3', 'rb', 'cd.yaml'],
             action="callback", callback=cb_to,
             help="output format -- autodetected from output file name"
         )
