@@ -1,0 +1,23 @@
+line_comment_start: /$PS/
+
+DocCommentBegin: /$PS{3}$EOL/
+DocCommentLine: /$PS$WS?($ANY*$EOL)/
+DocCommentEnd: /$PS{3}$EOL/
+
+IncludeCDent: /use CDent;/
+
+ClassStart: /.namespace$WS+$LSB$DQ($Id)$DQ$RSB$EOL/
+
+ClassBody:
+- indent
+- Comment*
+- Method
+- (Method|Comment)*
+
+ClassEnd: //
+
+MethodStart: /.method$WS+($Id)$EOL/
+
+MethodEnd: /.end$EOL/
+
+PrintLn: /say$WS+($ANY+)$EOL/

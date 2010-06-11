@@ -25,6 +25,8 @@ LP:   /\(/               # A left parentheses
 RP:   /\)/               # A right parentheses
 LCB:  /\{/               # A left curly brace
 RCB:  /\}/               # A right curly brace
+LSB:  /\[/               # A left square brace
+RSB:  /\]/               # A right square brace
 COL:  /:/                # A colon
 SC:   /;/                # A semicolon
 PLUS: /\+/               # A plus

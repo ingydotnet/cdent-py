@@ -310,7 +310,8 @@ Context:
         if index > 0 and stream[index - 1] != '\n':
             index = stream.rfind("\n", 0, index) + 1
         lines = stream[index:].split("\n") if index < len(stream) else []
-        lines.pop()
+        if lines:
+            lines.pop()
         if len(lines) >= 3:
             lines = lines[0:3]
         else:

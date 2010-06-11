@@ -26,6 +26,7 @@ id_to_class = {
     'cd.xml':  'cdent.xml',
     'cd.json': 'cdent.json',
     'cd.js': 'javascript',
+    'cd.pir': 'pir',
     'cd.pm6': 'perl6',
     'cd.py': 'python',
     'cpp':  'cpp',
