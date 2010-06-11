@@ -41,7 +41,12 @@ it like so::
 
     > git clone git://github.com/ingydotnet/cdent.git
     > cd cdent
-    > sudo setup.py install
+    > sudo python setup.py install
+
+You will need setuptools for Python to run the last command. On Debian-based systems, this can be installed with:
+
+    > sudo apt-get install python-setuptools
+
 
 USAGE
 -----
