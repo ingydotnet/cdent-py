@@ -20,14 +20,16 @@ C'Dent is a programming language that:
    - C'Dent - the compiled tree form serialized as YAML or XML
    - Perl and Perl 6
    - Python and Python 3000
+   - PHP
    - Ruby
    - JavaScript
-   - PHP
-   - Java
    - Scala
+   - Java
+   - ActionScript
+   - Go
+   - PIR (Parrot Intermediate Runtime)
    - C and C++
    - CIL (.NET Common Intermediate Language)
-   - PIR (Parrot Intermediate Runtime)
 5) Uses static implicit typing to assign types to all objects at
    compile time, and throw syntax errors for type conflicts. Strong
    typing is required to generate equivalent code in the various
@@ -97,18 +99,23 @@ C'Dent can currently parse:
 * Python
 * JavaScript
 * Perl 6
+* PIR
 * C'Dent/YAML (a C'Dent AST in YAML form)
 
 C'Dent can currently produce:
 
 * Perl
-* Perl 6
 * Python
-* Python 3
 * PHP
 * Ruby
-* Java
 * JavaScript
+* Scala
+* Java
+* ActionScript
+* Perl 6
+* Python 3
+* Go
+* PIR
 * C'Dent/YAML
 
 Next Steps:
