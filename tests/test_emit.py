@@ -66,6 +66,9 @@ class TestPythonParser(TestCase):
     def test_emit_pir(self):
         self.run_test('pir', 'pir', 'World.pir')
 
+    def test_emit_nqp(self):
+        self.run_test('nqp', 'nqp', 'World.nqp')
+
 #     def test_emit_cd_yaml(self):
 #         self.run_test('cdent.yaml', 'cd.yaml', 'World.cd.yaml')
 

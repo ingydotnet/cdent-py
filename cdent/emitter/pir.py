@@ -20,7 +20,7 @@ class Emitter(Base):
 
     def emit_method(self, method):
         name = method.name
-        self.writeln('.method %s' % name)
+        self.writeln('.sub %s :method' % name)
         self.emit(method.has, indent=True)
         self.writeln('.end')
 

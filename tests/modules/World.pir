@@ -5,6 +5,6 @@
 
 .namespace ["World"]
 
-.method greet
+.sub greet :method
     say "Hello, world"
 .end

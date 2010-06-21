@@ -24,7 +24,7 @@ class Grammar():
   'Method': All({'_': [Rule({'_': 'MethodStart'}), Rule({'_': 'MethodBody'}), Rule({'_': 'MethodEnd'})]}),
   'MethodBody': All({'_': [Indent({}), Rule({'_': 'Statement'}), Any({'x': '*', '_': [Rule({'_': 'Statement'}), Rule({'_': 'Comment'})]}), Undent({})]}),
   'MethodEnd': Re({'_': '.end\\r?\\n'}),
-  'MethodStart': Re({'_': '.method[\\ \\t]+(\\w+)\\r?\\n'}),
+  'MethodStart': Re({'_': '.sub[\\ \\t]+(\\w+)[\\ \\t]+:method\\r?\\n'}),
   'Module': All({'_': [Rule({'_': 'ModuleStart'}), Rule({'x': '?', '_': 'DocComment'}), Rule({'x': '*', '_': 'Comment'}), Rule({'x': '?', '_': 'IncludeCDent'}), Rule({'x': '*', '_': 'Comment'}), Rule({'_': 'Class'}), Any({'x': '*', '_': [Rule({'_': 'Class'}), Rule({'_': 'Comment'})]}), Rule({'_': 'ModuleEnd'}), Rule({'x': '*', '_': 'Comment'})]}),
   'ModuleEnd': Re({'_': ''}),
   'ModuleStart': Re({'_': ''}),

@@ -16,7 +16,7 @@ ClassBody:
 
 ClassEnd: //
 
-MethodStart: /.method$WS+($Id)$EOL/
+MethodStart: /.sub$WS+($Id)$WS+:method$EOL/
 
 MethodEnd: /.end$EOL/
 
