@@ -92,7 +92,7 @@ class Command():
         optparser.add_option(
             "--from", type="choice",
             # future: cd.jsync cd.json cd.xml
-            choices=['cd.pm', 'cd.py', 'cd.js', 'cd.pir', 'cd.yaml'],
+            choices=['cd.pm6', 'cd.py', 'cd.js', 'cd.pir', 'cd.yaml'],
             action="callback", callback=cb_from,
             help="input format -- autodetected from input file name"
         )
@@ -107,7 +107,7 @@ class Command():
             self.to = value
         optparser.add_option(
             "--to", type="choice",
-            choices=['pm', 'py', 'php', 'rb', 'js', 'java', 'as', 'pm6', 'py3', 'go', 'pir', 'nqp', 'cd.yaml'],
+            choices=['pm', 'py', 'php', 'rb', 'js', 'scala', 'java', 'as', 'pm6', 'py3', 'go', 'pir', 'nqp', 'cd.yaml'],
             action="callback", callback=cb_to,
             help="output format -- autodetected from output file name"
         )

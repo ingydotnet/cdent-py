@@ -15,7 +15,6 @@ class Emitter(Base):
     def emit_class(self, class_):
         name = class_.name
         self.writeln('.namespace ["%s"]' % name)
-        self.writeln()
         self.emit(class_.has)
 
     def emit_method(self, method):

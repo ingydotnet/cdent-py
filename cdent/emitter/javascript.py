@@ -9,7 +9,7 @@ from cdent.emitter import Emitter as Base
 class Emitter(Base):
     LANGUAGE_ID = 'js'
     LINE_COMMENT_PREFIX = '// '
-    BLOCK_COMMENT_BEGIN = '/*\n'
+    BLOCK_COMMENT_BEGIN = '/**\n'
     BLOCK_COMMENT_PREFIX = ' * '
     BLOCK_COMMENT_END = ' */\n'
 
@@ -20,7 +20,7 @@ class Emitter(Base):
         name = class_.name
         self.writeln('(this.%s = function() {}).prototype = {' % name)
         self.emit(class_.has, indent=True)
-        self.writeln('}')
+        self.writeln('};')
 
     def emit_method(self, method): 
         name = method.name
