@@ -1,5 +1,5 @@
 """\
-Perl 6 code emitter for C'Dent
+NQP (Not Quite Perl 6) code emitter for C'Dent
 """
 
 from __future__ import absolute_import
