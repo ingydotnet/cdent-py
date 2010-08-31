@@ -1,5 +1,5 @@
 // *** DO NOT EDIT ***  This is a C'Dent generated JavaScript module.
-/*
+/**
  * This is World class :)
  */
 
@@ -7,4 +7,4 @@
     greet: function() {
         print("Hello, world");
     }
-}
+};

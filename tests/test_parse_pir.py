@@ -18,7 +18,7 @@ class TestPythonParser(TestCase):
             exit(1)
 
         parser = cdent.parser.cdent.yaml.Parser()
-        input = file('tests/modules/world.cd.yaml', 'r').read()
+        input = file('tests/modules/World.cd.yaml', 'r').read()
         parser.open(input)
         expected = parser.parse()
 
