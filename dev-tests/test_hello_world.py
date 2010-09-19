@@ -1,9 +1,9 @@
 import sys
 import os
 
-import cdent.test
+from cdent.test import *
 
-class TestHelloWorld(cdent.test.TestCase):
+class TestHelloWorld(TestCase):
     cmds = [
         'PYTHONPATH=. python bin/cdent --compile --to=py --in=tests/modules/world.cd.yaml --out=output',
         'PYTHONPATH=. python bin/cdent --compile --to=pm --in=tests/modules/world.cd.yaml --out=output',
@@ -30,4 +30,4 @@ class TestHelloWorld(cdent.test.TestCase):
             os.unlink('output')
 
 if __name__ == '__main__':
-    cdent.test.main()
+    test.main()
