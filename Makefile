@@ -39,6 +39,7 @@
     register \
     sdist \
     clean \
+    purge \
     upload \
  
 
@@ -168,3 +169,5 @@ $(ALL_TESTS) $(ALL_DEV_TESTS):
 clean::
 	find . -name '*.pyc' | xargs rm
 	rm -fr build dist MANIFEST *.egg-info
+
+purge:: clean
