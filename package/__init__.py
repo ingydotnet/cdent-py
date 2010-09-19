@@ -1,11 +1,11 @@
 """\
-package package package
+package - The Python package package package
 """
 
 import os, sys, glob
 from distutils.core import Command
 
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 
 has_setuptools = False
 
@@ -64,7 +64,7 @@ class Test(Command):
             pass
         sys.exit = exit
 
-        for test in glob.glob(self.test_dir + '/*.py'):
+        for test in glob.glob(self.test_dir + '/test*.py'):
             name = test[test.index('/') + 1: test.rindex('.')]
             module = __import__(name)
             module.main(module=module, argv=[''])
