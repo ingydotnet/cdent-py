@@ -1,0 +1,23 @@
+line_comment_start: /<HASH>/
+
+DocCommentBegin: /<HASH>{3}<EOL>/
+DocCommentLine: /<HASH><BLANK>?(<ANY>*<EOL>)/
+DocCommentEnd: /<HASH>{3}<EOL>/
+
+IncludeCDent: /use CDent<SEMI>/
+
+ClassStart: /<DOT>namespace<BLANK>+<LSQUARE><DOUBLE>(<Id>)<DOUBLE><RSQUARE><EOL>/
+
+ClassBody:
+    <indent>
+    <Comment>*
+    <Method>
+    <Method> | <Comment> ]*
+
+ClassEnd: /<ALWAYS>/
+
+MethodStart: /<DOT>sub<BLANK>+(<Id>)<BLANK>+:method<EOL>/
+
+MethodEnd: /<DOT>end<EOL>/
+
+PrintLn: /say<BLANK>+(<ANY>+)<EOL>/

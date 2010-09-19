@@ -1,0 +1,58 @@
+Module:
+    <ModuleStart>
+    <DocComment>?
+    <Comment>*
+    <IncludeCDent>?
+    <Comment>*
+    <Class>
+    [ <Class> | <Comment>]*
+    <ModuleEnd>
+    <Comment>*
+
+DocComment:
+    <DocCommentBegin>
+    [
+        <!DocCommentEnd>
+        <DocCommentLine>
+    ]*
+    <DocCommentEnd>
+
+Class:
+    <ClassStart>
+    <ClassBody>
+    <ClassEnd>
+
+ClassBody:
+    <indent>
+    <Comment>*
+    <Method>
+    [ <Method> | <Comment> ]*
+    <undent>
+
+Method:
+    <MethodStart>
+    <MethodBody>
+    <MethodEnd>
+
+MethodBody:
+    <indent>
+    <Comment>*
+    <Statement>
+    [ <Statement> | <Comment> ]*
+    <undent>
+
+Statement:
+    <PrintLn>
+
+Comment: <LineComment> | <BlankLine>
+
+LineComment: /<line_comment_start>(<Line>)/
+
+Line: /<ANY>*<EOL>/
+BlankLine: /<BLANK>*<EOL>/
+
+ModuleStart: /<ALWAYS>/
+ModuleEnd: /<ALWAYS>/
+
+Id: /<WORD>+/
+

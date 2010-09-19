@@ -1,0 +1,17 @@
+line_comment_start: /<HASH>/
+
+DocCommentBegin: /<HASH>{3}<EOL>/
+DocCommentLine: /<HASH><BLANK>?(<ANY>*<EOL>)/
+DocCommentEnd: /<HASH>{3}<EOL>/
+
+IncludeCDent: /use CDent;/
+
+ClassStart: /class<BLANK>+(<Id>)<BLANK>+<LCURLY><EOL>/
+
+ClassEnd: /<RCURLY><EOL>/
+
+MethodStart: /method<BLANK>+(<Id>)<BLANK>+<LCURLY><EOL>/
+
+MethodEnd: /<RCURLY><EOL>/
+
+PrintLn: /say<BLANK>+(<ANY>+)<SEMI><EOL>/

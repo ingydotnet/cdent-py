@@ -1,0 +1,17 @@
+line_comment_start: /<HASH>/
+
+DocCommentBegin: /<DOUBLE><DOUBLE><DOUBLE><BACK><BLANK>*<EOL>/
+DocCommentLine: /(<ANY>*<EOL>)/
+DocCommentEnd: /<DOUBLE><DOUBLE><DOUBLE><BLANK>*<EOL>/
+
+IncludeCDent: /from cdent import <STAR>/
+
+ClassStart: /class<BLANK>+(<Id>)<LPAREN>(?:<Id>)?<RPAREN><COLON><EOL>/
+
+ClassEnd: /<ALWAYS>/
+
+MethodStart: /^def<BLANK>+(<Id>)<LPAREN>(?:<Id>)?<RPAREN><COLON><EOL>/
+
+MethodEnd: /<ALWAYS>/
+
+PrintLn: /print<BLANK>+(<ANY>+)<EOL>/

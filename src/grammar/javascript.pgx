@@ -1,0 +1,18 @@
+line_comment_start: /<SLASH><SLASH>/
+
+DocCommentBegin: /<SLASH><STAR><STAR><EOL>/
+DocCommentLine: /<BLANK><STAR><BLANK>?(<ANY>*<EOL>)/
+DocCommentEnd: /<BLANK><STAR><SLASH><EOL>/
+
+IncludeCDent: /load<BLANK><LPAREN><SINGLE>cdent.js<SINGLE><RPAREN><SEMI>/
+
+ClassStart: /<LPAREN>this<DOT>(<Id>)<BLANK>+<EQUAL><BLANK>+function<LPAREN><RPAREN><BLANK><LCURLY><RCURLY><RPAREN><DOT>prototype<BLANK>+<EQUAL><BLANK>+<LCURLY><EOL>/
+
+ClassEnd: /<RCURLY><SEMI><EOL>/
+
+MethodStart: /(<Id>)<COLON><BLANK>+function<LPAREN><RPAREN><BLANK>+<LCURLY><EOL>/
+
+MethodEnd: /<RCURLY><COMMA>?<EOL>/
+
+PrintLn: /print<LPAREN>(<ANY>+)<RPAREN><SEMI><EOL>/
+
