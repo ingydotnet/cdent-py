@@ -1,3 +1,5 @@
+%include cdent.pgx
+
 line_comment_start: /<HASH>/
 
 DocCommentBegin: /<DOUBLE><DOUBLE><DOUBLE><BACK><BLANK>*<EOL>/

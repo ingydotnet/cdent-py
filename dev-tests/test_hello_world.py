@@ -10,6 +10,7 @@ class TestHelloWorld(TestCase):
         'PYTHONPATH=. python bin/cdent --compile --to=js --in=tests/modules/world.cd.yaml --out=output',
         'PYTHONPATH=. python bin/cdent --compile --to=rb --in=tests/modules/world.cd.yaml --out=output',
         'cd dev-tests/hello-world; js hello_world.js',
+        'cd dev-tests/hello-world; node hello_world.js',
         'cd dev-tests/hello-world; php hello_world.php',
         'cd dev-tests/hello-world; perl6 hello_world.p6',
         'cd dev-tests/hello-world; perl hello_world.pl',

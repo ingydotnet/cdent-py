@@ -1,3 +1,5 @@
+%include cdent.pgx
+
 line_comment_start: /<SLASH><SLASH>/
 
 DocCommentBegin: /<SLASH><STAR><STAR><EOL>/
