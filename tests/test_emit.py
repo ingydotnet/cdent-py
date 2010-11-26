@@ -69,6 +69,16 @@ class TestPythonParser(TestCase):
     def test_emit_nqp(self):
         self.run_test('nqp', 'nqp', 'World.nqp')
 
+    def test_emit_pyc(self):
+        import cdent.emitter.pyc as pyc
+        import yaml
+
+        emitter = pyc.Emitter()
+        output = StringIO.StringIO()
+        emitter.open(output)
+        emitter.emit_ast(self.ast)
+        self.assertEquals("Hello, world", emitter.mod.body[0].body[0].body[0].values[0].s)
+
 #     def test_emit_cd_yaml(self):
 #         self.run_test('cdent.yaml', 'cd.yaml', 'World.cd.yaml')
 
