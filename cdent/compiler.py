@@ -18,6 +18,7 @@ id_to_language = {
     'pm6':      'Perl 6',
     'py':       'Python',
     'py3':      'Python 3',
+    'pyc':      'Python bytecode',
     'rb':       'Ruby',
     'scala':    'Scala',
 }
@@ -42,6 +43,7 @@ id_to_class = {
     'pm6':      'perl6',
     'py':       'python',
     'py3':      'python3',
+    'pyc':      'pyc',
     'rb':       'ruby',
     'scala':    'scala',
 }
