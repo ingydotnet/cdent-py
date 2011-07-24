@@ -21,6 +21,7 @@ id_to_language = {
     'pyc':      'Python bytecode',
     'rb':       'Ruby',
     'scala':    'Scala',
+    'tcl':      'Tcl',
 }
 
 id_to_class = {
@@ -46,6 +47,7 @@ id_to_class = {
     'pyc':      'pyc',
     'rb':       'ruby',
     'scala':    'scala',
+    'tcl':      'tcl',
 }
 
 def language(id):

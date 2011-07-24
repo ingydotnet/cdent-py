@@ -5,6 +5,8 @@ C'Dent command line script.
 
 import sys
 
+sys.path.insert(0, '.')
+
 from cdent.command import Command
 
 Command(sys.argv[1:]).run()
