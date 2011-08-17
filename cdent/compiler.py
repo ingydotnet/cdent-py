@@ -22,6 +22,7 @@ id_to_language = {
     'rb':       'Ruby',
     'scala':    'Scala',
     'tcl':      'Tcl',
+    'vala':     'Vala',
 }
 
 id_to_class = {
@@ -48,6 +49,7 @@ id_to_class = {
     'rb':       'ruby',
     'scala':    'scala',
     'tcl':      'tcl',
+    'vala':     'vala',
 }
 
 def language(id):
