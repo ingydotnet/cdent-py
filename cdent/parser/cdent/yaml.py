@@ -16,7 +16,7 @@ from cdent.parser import ParseError
 
 class Parser(Base):
     def parse(self):
-        return load(self.stream)
+        return load(self.stream, Loader)
 
     def multi_constructor(loader, type, node):
         obj = getattr(cdent.ast, type)()
