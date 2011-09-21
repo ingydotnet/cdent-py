@@ -1,0 +1,12 @@
+C++: Boost
+Haskell: Hackage
+Java: Maven
+Lua: LuaRocks
+Node: npm
+Perl 5: CPAN
+PHP:
+- PEAR
+- PECL
+Python: PyPI
+R: CRAN
+Ruby: RubyGems

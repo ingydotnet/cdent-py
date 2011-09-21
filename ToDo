@@ -1,3 +1,9 @@
+== Emitters:
+- Clojure
+- Erlang
+- Lua
+
+
 - Change versioning scheme to 0.4.01
   - C'Dent spec version
   - cdent.py version
@@ -5,7 +11,7 @@
 
 - Setup easy_install support
 - Add pyyaml as a dep
-  - Add reparse as a dep
+  - Add pegex as a dep
 
 - Start writing testml tests for C'Dent
 - Write JavaScript Parser
