@@ -6,6 +6,7 @@ import cdent
 
 id_to_language = {
     'as':       'ActionScript',
+    'coffee':   "CoffeeScript",
     'cd':       "C'Dent",
     'cpp':      'C++',
     'go':       'Go',
@@ -33,6 +34,7 @@ id_to_class = {
     'cd.pir':   'pir',
     'cd.pm6':   'perl6',
     'cd.py':    'python',
+    'coffee':   'coffee',
     'cpp':      'cpp',
     'go':       'go',
     'java':     'java',

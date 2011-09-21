@@ -42,6 +42,9 @@ class TestPythonParser(TestCase):
     def test_emit_ruby(self):
         self.run_test('ruby', 'rb', 'World.rb')
 
+    def test_emit_coffee(self):
+        self.run_test('coffee', 'coffee', 'World.coffee')
+
     def test_emit_javascript(self):
         self.run_test('javascript', 'js', 'World.js')
 

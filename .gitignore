@@ -1,6 +1,0 @@
-pyplay
-build/*
-package/*
-dist/*
-cdent.egg-info/*
-*.sw?
