@@ -76,7 +76,7 @@ class TestPythonParser(TestCase):
         self.run_test('tcl', 'tcl', 'World.tcl')
 
     def test_emit_vala(self):
-        self.run_test('vala', 'vala', 'World.vala')
+        self.run_test('vala', 'vala', 'world.vala')
 
     def test_emit_pyc(self):
         import cdent.emitter.pyc as pyc

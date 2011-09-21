@@ -3,10 +3,8 @@
  * This is World class :)
  */
 
-public class World : GLib.Object{
+public class World : GLib.Object {
     public void greet() {
-        stdout.printf("Hello, world");
-        stdout.printf("\n");
+        stdout.printf("Hello, world" + "\n");
     }
 }
-
